@@ -4,6 +4,7 @@
 - `npx create-expo-app 프로젝트 이름` TS로 시작
 
 ## 카카오톡 친구 목록
+<img src="https://github.com/user-attachments/assets/e6079446-f05c-4caf-957d-610eaab35d4b"  width="200" height="400"/>
 
 ### 노치 영역
 
