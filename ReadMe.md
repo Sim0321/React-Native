@@ -3,7 +3,11 @@
 - `npx create-expo-app 프로젝트 이름--template blank` JS로 시작
 - `npx create-expo-app 프로젝트 이름` TS로 시작
 
-## 카카오톡 친구 목록
+## 프로젝트
+
+<details>
+<summary>카카오톡 친구 목록</summary>
+<div markdown="1">
 <img src="https://github.com/user-attachments/assets/e6079446-f05c-4caf-957d-610eaab35d4b"  width="200" height="400"/>
 
 ### 노치 영역
@@ -30,4 +34,5 @@
 - StyleSheet : 어떤 스타일인지 또 한번 들어가봐야 하는 단점 있음
 - Styled Component : 네이밍을 직접할 수 있으므로 StyleSheet보다 직관적
 
-## 완성 UI
+</div>
+</details>
