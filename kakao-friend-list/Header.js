@@ -18,12 +18,12 @@ export default () => {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
-        // paddingVertical: 10,
+        paddingVertical: 10,
       }}
     >
       <Text style={{ fontSize: 22, fontWeight: "bold" }}>친구</Text>
 
-      <View style={{ flexDirection: "row", backgroundColor: "pink" }}>
+      <View style={{ flexDirection: "row" }}>
         <IconButton name="search-outline" />
         <IconButton name="person-add-outline" />
         <IconButton name="musical-notes-outline" />
