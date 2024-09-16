@@ -40,6 +40,17 @@
 <details>
 <summary>계산기</summary>
 <div markdown="1">
-ㅇㅇ
+
+### UI
+
+- 직관적이게 하기 위해 flex로 행을 나눈 뒤, 위에서 아래로 UI 그리기
+- 7 ~ 9, 4 ~ 6, 1 ~ 3 부분은 같은 로직이라 배열 생성 후 map함수로 로직단축
+
+### TextView 글자 수에 따라 글자 크기 줄이기
+
+- `adjustsFontSizeToFit` 사용,
+- `numberOfLines` 속성 이용해 한 줄로
+- `minimumFontScale` 이용해 최소 크기 지정
+
 </div>
 </details>

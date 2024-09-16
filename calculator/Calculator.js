@@ -1,7 +1,5 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
 
 export default () => {
@@ -19,8 +17,53 @@ export default () => {
     NUM: "#5C5674",
   };
 
+  const onPressNum = (num) => {
+    if (currentOperator) {
+      setResult(input);
+      setInput(num);
+    } else {
+      const newInput = Number(`${input}${num}`);
+      setInput(newInput);
+    }
+  };
+
+  const onPressOperator = (operator) => {
+    if (operator !== "=") {
+      setCurrentOperator(operator);
+    } else {
+      let finalResult = result;
+      switch (currentOperator) {
+        case "+":
+          finalResult = result + input;
+          break;
+        case "-":
+          finalResult = result - input;
+          break;
+        case "*":
+          finalResult = result * input;
+          break;
+        case "/":
+          finalResult = result / input;
+          break;
+
+        default:
+          break;
+      }
+      setResult(finalResult);
+      setInput(finalResult);
+    }
+  };
+
+  const onPressReset = () => {
+    setInput(0);
+    setCurrentOperator(null);
+    setResult(null);
+    setTempInput(null);
+    setTempOperator(null);
+  };
+
   // Button type: 'result' | 'operator' | 'num'
-  const Button = ({ text, onPress, flex, type }) => {
+  const Button = ({ text, onPress, flex, type, isSelected }) => {
     const backgroundColor =
       type === "reset"
         ? COLORMAP.RESET
@@ -38,7 +81,7 @@ export default () => {
           justifyContent: "center",
           alignItems: "center",
           height: 50,
-          borderWidth: 0.2,
+          borderWidth: isSelected ? 1 : 0.2,
           borderColor: "blcak",
         }}
       >
@@ -91,38 +134,86 @@ export default () => {
 
       {/* AC ~ / */}
       <ButtonContainer>
-        <Button type="reset" text="AC" onPress={() => null} flex={3} />
-        <Button type="operator" text="/" onPress={() => null} flex={1} />
+        <Button type="reset" text="AC" onPress={onPressReset} flex={3} />
+        <Button
+          type="operator"
+          text="/"
+          onPress={() => onPressOperator("/")}
+          flex={1}
+          isSelected={currentOperator === "/"}
+        />
       </ButtonContainer>
 
       {/* 7 ~ x */}
       <ButtonContainer>
-        <Button type="num" text="7" onPress={() => null} flex={1} />
-        <Button type="num" text="8" onPress={() => null} flex={1} />
-        <Button type="num" text="9" onPress={() => null} flex={1} />
-        <Button type="operator" text="X" onPress={() => null} flex={1} />
+        {[7, 8, 9].map((num) => (
+          <Button
+            type="num"
+            key={num}
+            text={num}
+            onPress={() => onPressNum(num)}
+            flex={1}
+          />
+        ))}
+
+        <Button
+          type="operator"
+          text="*"
+          onPress={() => onPressOperator("*")}
+          flex={1}
+          isSelected={currentOperator === "*"}
+        />
       </ButtonContainer>
 
       {/* 4 ~ - */}
       <ButtonContainer>
-        <Button type="num" text="4" onPress={() => null} flex={1} />
-        <Button type="num" text="5" onPress={() => null} flex={1} />
-        <Button type="num" text="6" onPress={() => null} flex={1} />
-        <Button type="operator" text="-" onPress={() => null} flex={1} />
+        {[4, 5, 6].map((num) => (
+          <Button
+            type="num"
+            key={num}
+            text={num}
+            onPress={() => onPressNum(num)}
+            flex={1}
+          />
+        ))}
+        <Button
+          type="operator"
+          text="-"
+          onPress={() => onPressOperator("-")}
+          flex={1}
+          isSelected={currentOperator === "-"}
+        />
       </ButtonContainer>
 
       {/* 1 ~ + */}
       <ButtonContainer>
-        <Button type="num" text="1" onPress={() => null} flex={1} />
-        <Button type="num" text="2" onPress={() => null} flex={1} />
-        <Button type="num" text="3" onPress={() => null} flex={1} />
-        <Button type="operator" text="+" onPress={() => null} flex={1} />
+        {[1, 2, 3].map((num) => (
+          <Button
+            type="num"
+            key={num}
+            text={num}
+            onPress={() => onPressNum(num)}
+            flex={1}
+          />
+        ))}
+        <Button
+          type="operator"
+          text="+"
+          onPress={() => onPressOperator("+")}
+          flex={1}
+          isSelected={currentOperator === "+"}
+        />
       </ButtonContainer>
 
       {/* 0 ~ = */}
       <ButtonContainer>
         <Button type="num" text="0" onPress={() => null} flex={3} />
-        <Button type="operator" text="=" onPress={() => null} flex={1} />
+        <Button
+          type="operator"
+          text="="
+          onPress={() => onPressOperator("=")}
+          flex={1}
+        />
       </ButtonContainer>
     </View>
   );
