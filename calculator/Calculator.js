@@ -9,8 +9,12 @@ const COLORMAP = {
   NUM: "#5C5674",
 };
 
+const oneBlockWidth = 80;
+
 // Button type: 'result' | 'operator' | 'num'
 const Button = ({ text, onPress, flex, type, isSelected }) => {
+  console.log(flex);
+
   const backgroundColor =
     type === "reset"
       ? COLORMAP.RESET
@@ -28,6 +32,7 @@ const Button = ({ text, onPress, flex, type, isSelected }) => {
         justifyContent: "center",
         alignItems: "center",
         height: 50,
+        width: oneBlockWidth * flex,
         borderWidth: isSelected ? 1 : 0.2,
         borderColor: "blcak",
       }}
@@ -62,11 +67,15 @@ export default () => {
         justifyContent: "center",
       }}
     >
-      <Text>input:{input}</Text>
-      <Text>currentOperator:{currentOperator}</Text>
-      <Text>result:{result}</Text>
-      <Text>tempInput:{tempInput}</Text>
-      <Text>tempOperator:{tempOperator}</Text>
+      {__DEV__ && (
+        <>
+          <Text>input:{input}</Text>
+          <Text>currentOperator:{currentOperator}</Text>
+          <Text>result:{result}</Text>
+          <Text>tempInput:{tempInput}</Text>
+          <Text>tempOperator:{tempOperator}</Text>
+        </>
+      )}
       {/* 결과 */}
       <View
         style={{
@@ -85,6 +94,7 @@ export default () => {
             color: "white",
             paddingLeft: 20,
             paddingRight: 8,
+            width: `${oneBlockWidth * 4}px`,
           }}
         >
           {input}
