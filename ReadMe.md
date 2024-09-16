@@ -52,5 +52,9 @@
 - `numberOfLines` 속성 이용해 한 줄로
 - `minimumFontScale` 이용해 최소 크기 지정
 
+### UI와 로직 분리
+
+- custom hook으로 UI와 로직 분리
+
 </div>
 </details>
