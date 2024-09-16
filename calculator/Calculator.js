@@ -10,6 +10,12 @@ export default () => {
   const [tempInput, setTempInput] = useState(null);
   const [tempOperator, setTempOperator] = useState(null);
 
+  const [isClickedOperator, setIsClickedOperator] = useState(false);
+  const [isClickedEqual, setIsClickedEqual] = useState(false);
+
+  // const hasInput = input ? true : false;
+  const hasInput = !!input;
+
   const COLORMAP = {
     RESULT: "#4E4C51",
     RESET: "#5F5E62",
@@ -18,9 +24,10 @@ export default () => {
   };
 
   const onPressNum = (num) => {
-    if (currentOperator) {
+    if (currentOperator && isClickedOperator) {
       setResult(input);
       setInput(num);
+      setIsClickedOperator(false);
     } else {
       const newInput = Number(`${input}${num}`);
       setInput(newInput);
@@ -30,20 +37,24 @@ export default () => {
   const onPressOperator = (operator) => {
     if (operator !== "=") {
       setCurrentOperator(operator);
+      setIsClickedOperator(true);
+      setIsClickedEqual(false);
     } else {
       let finalResult = result;
-      switch (currentOperator) {
+      const finalInput = isClickedEqual ? tempInput : input;
+      const finalOperator = isClickedEqual ? tempOperator : currentOperator;
+      switch (finalOperator) {
         case "+":
-          finalResult = result + input;
+          finalResult = result + finalInput;
           break;
         case "-":
-          finalResult = result - input;
+          finalResult = result - finalInput;
           break;
         case "*":
-          finalResult = result * input;
+          finalResult = result * finalInput;
           break;
         case "/":
-          finalResult = result / input;
+          finalResult = result / finalInput;
           break;
 
         default:
@@ -51,15 +62,23 @@ export default () => {
       }
       setResult(finalResult);
       setInput(finalResult);
+      setTempInput(finalInput);
+      setIsClickedEqual(true);
+      setCurrentOperator(null);
+      setTempOperator(finalOperator);
     }
   };
 
   const onPressReset = () => {
-    setInput(0);
-    setCurrentOperator(null);
-    setResult(null);
-    setTempInput(null);
-    setTempOperator(null);
+    if (hasInput) {
+      setInput(0);
+    } else {
+      setInput(0);
+      setCurrentOperator(null);
+      setResult(null);
+      setTempInput(null);
+      setTempOperator(null);
+    }
   };
 
   // Button type: 'result' | 'operator' | 'num'
@@ -134,7 +153,12 @@ export default () => {
 
       {/* AC ~ / */}
       <ButtonContainer>
-        <Button type="reset" text="AC" onPress={onPressReset} flex={3} />
+        <Button
+          type="reset"
+          text={hasInput ? "C" : "AC"}
+          onPress={onPressReset}
+          flex={3}
+        />
         <Button
           type="operator"
           text="/"
