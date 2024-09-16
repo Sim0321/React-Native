@@ -1,119 +1,59 @@
-import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import styled from "styled-components/native";
+import { useCalculator } from "./use-calculator";
+
+const COLORMAP = {
+  RESULT: "#4E4C51",
+  RESET: "#5F5E62",
+  OPERATOR: "#F39C29",
+  NUM: "#5C5674",
+};
+
+// Button type: 'result' | 'operator' | 'num'
+const Button = ({ text, onPress, flex, type, isSelected }) => {
+  const backgroundColor =
+    type === "reset"
+      ? COLORMAP.RESET
+      : type === "operator"
+      ? COLORMAP.OPERATOR
+      : type === "num"
+      ? COLORMAP.NUM
+      : "transparent";
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        flex,
+        backgroundColor,
+        justifyContent: "center",
+        alignItems: "center",
+        height: 50,
+        borderWidth: isSelected ? 1 : 0.2,
+        borderColor: "blcak",
+      }}
+    >
+      <Text style={{ color: "white", fontSize: 25 }}>{text}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const ButtonContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+`;
 
 export default () => {
-  const [input, setInput] = useState(0);
-  const [currentOperator, setCurrentOperator] = useState(null); // +,-,*,/
-  const [result, setResult] = useState(null);
-
-  const [tempInput, setTempInput] = useState(null);
-  const [tempOperator, setTempOperator] = useState(null);
-
-  const [isClickedOperator, setIsClickedOperator] = useState(false);
-  const [isClickedEqual, setIsClickedEqual] = useState(false);
-
-  // const hasInput = input ? true : false;
-  const hasInput = !!input;
-
-  const COLORMAP = {
-    RESULT: "#4E4C51",
-    RESET: "#5F5E62",
-    OPERATOR: "#F39C29",
-    NUM: "#5C5674",
-  };
-
-  const onPressNum = (num) => {
-    if (currentOperator && isClickedOperator) {
-      setResult(input);
-      setInput(num);
-      setIsClickedOperator(false);
-    } else {
-      const newInput = Number(`${input}${num}`);
-      setInput(newInput);
-    }
-  };
-
-  const onPressOperator = (operator) => {
-    if (operator !== "=") {
-      setCurrentOperator(operator);
-      setIsClickedOperator(true);
-      setIsClickedEqual(false);
-    } else {
-      let finalResult = result;
-      const finalInput = isClickedEqual ? tempInput : input;
-      const finalOperator = isClickedEqual ? tempOperator : currentOperator;
-      switch (finalOperator) {
-        case "+":
-          finalResult = result + finalInput;
-          break;
-        case "-":
-          finalResult = result - finalInput;
-          break;
-        case "*":
-          finalResult = result * finalInput;
-          break;
-        case "/":
-          finalResult = result / finalInput;
-          break;
-
-        default:
-          break;
-      }
-      setResult(finalResult);
-      setInput(finalResult);
-      setTempInput(finalInput);
-      setIsClickedEqual(true);
-      setCurrentOperator(null);
-      setTempOperator(finalOperator);
-    }
-  };
-
-  const onPressReset = () => {
-    if (hasInput) {
-      setInput(0);
-    } else {
-      setInput(0);
-      setCurrentOperator(null);
-      setResult(null);
-      setTempInput(null);
-      setTempOperator(null);
-    }
-  };
-
-  // Button type: 'result' | 'operator' | 'num'
-  const Button = ({ text, onPress, flex, type, isSelected }) => {
-    const backgroundColor =
-      type === "reset"
-        ? COLORMAP.RESET
-        : type === "operator"
-        ? COLORMAP.OPERATOR
-        : type === "num"
-        ? COLORMAP.NUM
-        : "transparent";
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={{
-          flex,
-          backgroundColor,
-          justifyContent: "center",
-          alignItems: "center",
-          height: 50,
-          borderWidth: isSelected ? 1 : 0.2,
-          borderColor: "blcak",
-        }}
-      >
-        <Text style={{ color: "white", fontSize: 25 }}>{text}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const ButtonContainer = styled.View`
-    width: 100%;
-    flex-direction: row;
-  `;
-
+  const {
+    input,
+    currentOperator,
+    result,
+    tempInput,
+    tempOperator,
+    hasInput,
+    onPressNum,
+    onPressOperator,
+    onPressReset,
+  } = useCalculator();
   return (
     <View
       style={{
