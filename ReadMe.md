@@ -39,7 +39,7 @@
 
 <details>
 <summary>계산기</summary>
-<div markdown="1">
+<div markdown="2">
 
 ### UI
 
@@ -55,6 +55,13 @@
 ### UI와 로직 분리
 
 - custom hook으로 UI와 로직 분리
+
+</div>
+</details>
+
+<details>
+<summary>캘린더 투두</summary>
+<div markdown="3">
 
 </div>
 </details>
