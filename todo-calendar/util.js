@@ -3,6 +3,10 @@ import dayjs from "dayjs";
 export const ITEM_WIDTH = 220;
 export const COLUMN_SIZE = 35;
 
+{
+  /* ios 시뮬레이터 키보드 on/off cmd + shift + k */
+}
+
 export const fillEmptyColumns = (columns, start, end) => {
   const filledColumns = columns.slice(0);
 

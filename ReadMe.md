@@ -104,5 +104,10 @@ export default function App() {
 </SafeAreaInsetsContext.Consumer>
 ```
 
+- TextInput이 하단에 위치하는데 keyboard가 올라오면서 TextInput이 덮여지는 형상
+
+1. KeyboardAvoidingView로 해결
+2. keybord가 올라온 후 날짜를 누르면 키보드가 내려가지만 여백을 누르면 내려가지지 않아 최상단 컴포넌트를 Pressable로 수정 후 누르면 이벤트를 삭제하는 방식으로 수정
+
 </div>
 </details>

@@ -3,27 +3,20 @@ import { TextInput, TouchableOpacity, View } from "react-native";
 import { ITEM_WIDTH } from "./util";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
-export default ({
-  value,
-  onChangeText,
-  bottomSpace,
-  placeholder,
-  onPressAdd,
-}) => {
-  console.log(bottomSpace);
+export default ({ value, onChangeText, placeholder, onPressAdd }) => {
   return (
     <View
       style={{
-        marginBottom: bottomSpace,
         flexDirection: "row",
         alignItems: "center",
+        alignSelf: "center",
         width: ITEM_WIDTH,
       }}
     >
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        style={{ padding: 5, flex: 1 }}
+        style={{ padding: 5, flex: 1, color: "#595959" }}
         placeholder={placeholder}
       />
       <TouchableOpacity

@@ -1,7 +1,17 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
@@ -77,8 +87,9 @@ export default function App() {
 
   const renderItem = ({ item: todo }) => {
     const isDone = todo.isDone;
+
     return (
-      <View
+      <Pressable
         style={{
           width: ITEM_WIDTH,
           // backgroundColor: todo.id % 2 === 0 ? "pink" : "lightblue",
@@ -98,7 +109,7 @@ export default function App() {
           size={17}
           color={isDone ? "#595959" : "#bfbfbf"}
         />
-      </View>
+      </Pressable>
     );
   };
 
@@ -106,7 +117,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container}>
+      <Pressable style={styles.container} onPress={Keyboard.dismiss}>
         <Image
           style={{
             width: "100%",
@@ -123,22 +134,28 @@ export default function App() {
             console.log(insets);
             return (
               <>
-                <FlatList
-                  data={todoList}
-                  renderItem={renderItem}
-                  ListHeaderComponent={ListHeaderComponent}
-                  contentContainerStyle={{ paddingTop: insets.top }}
-                />
+                <KeyboardAvoidingView
+                  behavior={Platform.OS === "ios" ? "padding" : "height"}
+                >
+                  <>
+                    <FlatList
+                      data={todoList}
+                      renderItem={renderItem}
+                      ListHeaderComponent={ListHeaderComponent}
+                      contentContainerStyle={{ paddingTop: insets.top + 30 }}
+                    />
 
-                <AddTodoInput
-                  value={input}
-                  onChangeText={setInput}
-                  bottomSpace={insets.bottom}
-                  placeholder={`${dayjs(selectedDate).format(
-                    "M.D"
-                  )}에 추가할 투두`}
-                  onPressAdd={onPressAdd}
-                />
+                    <AddTodoInput
+                      value={input}
+                      onChangeText={setInput}
+                      placeholder={`${dayjs(selectedDate).format(
+                        "M.D"
+                      )}에 추가할 투두`}
+                      onPressAdd={onPressAdd}
+                    />
+                  </>
+                </KeyboardAvoidingView>
+                <Margin height={insets.bottom + 30} />
               </>
             );
           }}
@@ -154,7 +171,7 @@ export default function App() {
           confirmTextIOS="확인"
           cancelTextIOS="취소"
         />
-      </View>
+      </Pressable>
     </SafeAreaProvider>
   );
 }
