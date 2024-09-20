@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
@@ -31,6 +31,8 @@ export default function App() {
   const now = dayjs();
   const columns = getCalendarColumns(selectedDate);
 
+  const flatListRef = useRef(null);
+
   const {
     selectedDate,
     setSelectedDate,
@@ -42,8 +44,15 @@ export default function App() {
     add1Month,
   } = useCalendar(now);
 
-  const { todoList, addTodo, removeTodo, toggleTodo, input, setInput } =
-    useTodoList(selectedDate);
+  const {
+    todoList,
+    addTodo,
+    removeTodo,
+    toggleTodo,
+    input,
+    setInput,
+    resetInput,
+  } = useTodoList(selectedDate);
 
   const onPressLeftArrow = subtract1Month;
   const onPressRightArrow = add1Month;
@@ -127,7 +136,27 @@ export default function App() {
     );
   };
 
-  const onPressAdd = () => {};
+  const scrollToEnd = () => {
+    setTimeout(() => {
+      flatListRef.current?.scrollToEnd();
+    }, 200);
+  };
+
+  const onPressAdd = () => {
+    addTodo();
+    resetInput();
+    scrollToEnd();
+  };
+
+  const onSubmitEditing = () => {
+    addTodo();
+    resetInput();
+    scrollToEnd();
+  };
+
+  const onFocus = () => {
+    scrollToEnd();
+  };
 
   return (
     <SafeAreaProvider>
@@ -153,10 +182,12 @@ export default function App() {
                 >
                   <>
                     <FlatList
+                      ref={flatListRef}
                       data={todoList}
                       renderItem={renderItem}
                       ListHeaderComponent={ListHeaderComponent}
                       contentContainerStyle={{ paddingTop: insets.top + 30 }}
+                      showsVerticalScrollIndicator={false}
                     />
 
                     <AddTodoInput
@@ -166,6 +197,8 @@ export default function App() {
                         "M.D"
                       )}에 추가할 투두`}
                       onPressAdd={onPressAdd}
+                      onSubmitEditing={onSubmitEditing}
+                      onFocus={onFocus}
                     />
                   </>
                 </KeyboardAvoidingView>

@@ -65,7 +65,7 @@
 
 ### UI
 
-- 배경 이미지를 전체적으로 먹이고 싶어 SafeAreaView가 아닌 그냥 View로 했고, FlastList에 statusBar의 높이 값 만큼 paddingTop을 주고 싶은 상황
+> - 배경 이미지를 전체적으로 먹이고 싶어 SafeAreaView가 아닌 그냥 View로 했고, FlastList에 statusBar의 높이 값 만큼 paddingTop을 주고 싶은 상황
 
 1. react-native-iphont-x-helper 라이브러리를 이용해 statuBarHeight값을 구해 paddingTop에 주려고 했지만 더 이상은 사용하지 않는 라이브러리이며 테스트 기계가 iphone 15 pro라 height값이 정확하지 않았음
 2. react-native-safe-area-context 라이브러리에 있는 ueSafeAreaInsets() 훅을 이용해 사용하려 했지만 SafeAreaProvider보다 먼저 선언이 되어 오류 발생
@@ -104,7 +104,7 @@ export default function App() {
 </SafeAreaInsetsContext.Consumer>
 ```
 
-- TextInput이 하단에 위치하는데 keyboard가 올라오면서 TextInput이 덮여지는 형상
+> - TextInput이 하단에 위치하는데 keyboard가 올라오면서 TextInput이 덮여지는 형상
 
 1. KeyboardAvoidingView로 해결
 2. keybord가 올라온 후 날짜를 누르면 키보드가 내려가지만 여백을 누르면 내려가지지 않아 최상단 컴포넌트를 Pressable로 수정 후 누르면 이벤트를 삭제하는 방식으로 수정
