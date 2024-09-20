@@ -23,7 +23,7 @@ const defaultTodoList = [
 ];
 
 export const useTodoList = (selectedDate) => {
-  const [todoList, setTodoList] = useState(defaultTodoList);
+  const [todoList, setTodoList] = useState([]);
 
   const [input, setInput] = useState("");
 
@@ -62,8 +62,13 @@ export const useTodoList = (selectedDate) => {
 
   const resetInput = () => setInput("");
 
+  const filteredTodoList = todoList.filter((todo) => {
+    const isSameDate = dayjs(todo.date).isSame(selectedDate, "date");
+    return isSameDate;
+  });
+
   return {
-    todoList,
+    filteredTodoList,
     addTodo,
     removeTodo,
     toggleTodo,

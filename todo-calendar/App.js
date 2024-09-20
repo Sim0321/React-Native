@@ -45,7 +45,7 @@ export default function App() {
   } = useCalendar(now);
 
   const {
-    todoList,
+    filteredTodoList,
     addTodo,
     removeTodo,
     toggleTodo,
@@ -183,7 +183,7 @@ export default function App() {
                   <>
                     <FlatList
                       ref={flatListRef}
-                      data={todoList}
+                      data={filteredTodoList}
                       renderItem={renderItem}
                       ListHeaderComponent={ListHeaderComponent}
                       contentContainerStyle={{ paddingTop: insets.top + 30 }}
