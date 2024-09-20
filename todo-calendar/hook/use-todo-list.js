@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { useState } from "react";
 
 const defaultTodoList = [
   {
@@ -59,5 +60,12 @@ export const useTodoList = (selectedDate) => {
     setTodoList(newTodoList);
   };
 
-  return {};
+  return {
+    todoList,
+    addTodo,
+    removeTodo,
+    toggleTodo,
+    input,
+    setInput,
+  };
 };

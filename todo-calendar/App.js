@@ -1,24 +1,24 @@
-import dayjs from "dayjs";
-
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { getCalendarColumns, getDayColor, getDayText } from "./util";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaInsetsContext,
+  SafeAreaProvider,
+} from "react-native-safe-area-context";
+
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+import { getCalendarColumns, ITEM_WIDTH } from "./util";
 import { useCalendar } from "./hook/use-calendar";
 import { useTodoList } from "./hook/use-todo-list";
-
-const columnSize = 35;
+import Calendar from "./Calendar";
+import Margin from "./Margin";
+import AddTodoInput from "./AddTodoInput";
 
 export default function App() {
   const now = dayjs();
+  const columns = getCalendarColumns(selectedDate);
 
   const {
     selectedDate,
@@ -31,135 +31,131 @@ export default function App() {
     add1Month,
   } = useCalendar(now);
 
-  const {} = useTodoList(selectedDate);
-
-  const columns = getCalendarColumns(selectedDate);
+  const { todoList, addTodo, removeTodo, toggleTodo, input, setInput } =
+    useTodoList(selectedDate);
 
   const onPressLeftArrow = subtract1Month;
   const onPressRightArrow = add1Month;
+  const onPressHeaderDate = showDatePicker;
+  const onPressDate = setSelectedDate;
 
-  const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
-    return (
-      <TouchableOpacity
-        disabled={disabled}
-        onPress={onPress}
-        style={{
-          width: columnSize,
-          height: columnSize,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: isSelected ? "#c2c2c2" : "transparent",
-          borderRadius: columnSize / 2,
-        }}
-      >
-        <Text style={{ color, opacity }}>{text}</Text>
-      </TouchableOpacity>
-    );
-  };
-
-  const ArrowButton = ({ name, onPress }) => {
-    return (
-      <TouchableOpacity
-        onPress={onPress}
-        style={{ paddingHorizontal: 20, paddingVertical: 15 }}
-      >
-        <SimpleLineIcons name={name} size={15} color="#404040" />
-      </TouchableOpacity>
-    );
-  };
+  // useEffect(() => {
+  //   console.log(
+  //     "changed selectedDate",
+  //     dayjs(selectedDate).format("YYYY.MM.DD")
+  //   );
+  // }, [selectedDate]);
 
   const ListHeaderComponent = () => {
-    const currentDateText = dayjs(selectedDate).format("YYYY.MM.DD");
     return (
       <View>
-        {/* <YYYY.MM.DD */}
+        <Calendar
+          selectedDate={selectedDate}
+          onPressLeftArrow={onPressLeftArrow}
+          onPressRightArrow={onPressRightArrow}
+          onPressHeaderDate={onPressHeaderDate}
+          onPressDate={onPressDate}
+          columns={columns}
+        />
+
+        <Margin height={15} />
+
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
+            width: 4,
+            height: 4,
+            borderRadius: 4 / 2,
+            backgroundColor: "#a3a3a3",
+            alignSelf: "center",
           }}
-        >
-          <ArrowButton name="arrow-left" onPress={onPressLeftArrow} />
+        />
 
-          <TouchableOpacity onPress={showDatePicker}>
-            <Text style={{ fontSize: 20, color: "#404040" }}>
-              {currentDateText}
-            </Text>
-          </TouchableOpacity>
-
-          <ArrowButton name="arrow-right" onPress={onPressRightArrow} />
-        </View>
-
-        <View style={{ flexDirection: "row" }}>
-          {/* 일 ~ 토 */}
-          {[0, 1, 2, 3, 4, 5, 6].map((day) => {
-            const dayText = getDayText(day);
-            const color = getDayColor(day);
-            return (
-              <Column
-                key={`day-${day}`}
-                text={dayText}
-                color={color}
-                opacity={1}
-                disabled={true}
-              />
-            );
-          })}
-        </View>
+        <Margin height={15} />
       </View>
     );
   };
 
-  const renderItem = ({ item: date }) => {
-    const dateText = dayjs(date).get("date");
-    const day = dayjs(date).get("day");
-    const color = getDayColor(day);
-    const isCurrentMonth = dayjs(date).isSame(selectedDate, "month");
-
-    const onPress = () => {
-      setSelectedDate(date);
-    };
-
-    const isSelected = dayjs(date).isSame(selectedDate, "date");
+  const renderItem = ({ item: todo }) => {
+    const isDone = todo.isDone;
     return (
-      <Column
-        text={dateText}
-        color={color}
-        opacity={isCurrentMonth ? 1 : 0.4}
-        onPress={onPress}
-        isSelected={isSelected}
-      />
+      <View
+        style={{
+          width: ITEM_WIDTH,
+          // backgroundColor: todo.id % 2 === 0 ? "pink" : "lightblue",
+          flexDirection: "row",
+          alignSelf: "center",
+          paddingVertical: 10,
+          paddingHorizontal: 5,
+          borderBottomWidth: 0.2,
+          borderColor: "#a6a6a6",
+        }}
+      >
+        <Text style={{ fontSize: 14, color: "#595959", flex: 1 }}>
+          {todo.content}
+        </Text>
+        <Ionicons
+          name="checkmark"
+          size={17}
+          color={isDone ? "#595959" : "#bfbfbf"}
+        />
+      </View>
     );
   };
 
-  useEffect(() => {
-    console.log(
-      "changed selectedDate",
-      dayjs(selectedDate).format("YYYY.MM.DD")
-    );
-  }, [selectedDate]);
+  const onPressAdd = () => {};
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        keyExtractor={(_, index) => `column-${index}`}
-        data={columns}
-        renderItem={renderItem}
-        numColumns={7}
-        ListHeaderComponent={ListHeaderComponent}
-      />
-      <DateTimePickerModal
-        locale="KO"
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        date={new Date(selectedDate)}
-        confirmTextIOS="확인"
-        cancelTextIOS="취소"
-      />
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        <Image
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "absolute",
+          }}
+          source={{
+            uri: "https://img.freepik.com/free-photo/white-crumpled-paper-texture-for-background_1373-159.jpg?w=1060&t=st=1667524235~exp=1667524835~hmac=8a3d988d6c33a32017e280768e1aa4037b1ec8078c98fe21f0ea2ef361aebf2c",
+          }}
+        />
+
+        <SafeAreaInsetsContext.Consumer>
+          {(insets) => {
+            console.log(insets);
+            return (
+              <>
+                <FlatList
+                  data={todoList}
+                  renderItem={renderItem}
+                  ListHeaderComponent={ListHeaderComponent}
+                  contentContainerStyle={{ paddingTop: insets.top }}
+                />
+
+                <AddTodoInput
+                  value={input}
+                  onChangeText={setInput}
+                  bottomSpace={insets.bottom}
+                  placeholder={`${dayjs(selectedDate).format(
+                    "M.D"
+                  )}에 추가할 투두`}
+                  onPressAdd={onPressAdd}
+                />
+              </>
+            );
+          }}
+        </SafeAreaInsetsContext.Consumer>
+
+        <DateTimePickerModal
+          locale="KO"
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          date={new Date(selectedDate)}
+          confirmTextIOS="확인"
+          cancelTextIOS="취소"
+        />
+      </View>
+    </SafeAreaProvider>
   );
 }
 

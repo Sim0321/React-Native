@@ -63,5 +63,46 @@
 <summary>캘린더 투두</summary>
 <div markdown="3">
 
+### UI
+
+- 배경 이미지를 전체적으로 먹이고 싶어 SafeAreaView가 아닌 그냥 View로 했고, FlastList에 statusBar의 높이 값 만큼 paddingTop을 주고 싶은 상황
+
+1. react-native-iphont-x-helper 라이브러리를 이용해 statuBarHeight값을 구해 paddingTop에 주려고 했지만 더 이상은 사용하지 않는 라이브러리이며 테스트 기계가 iphone 15 pro라 height값이 정확하지 않았음
+2. react-native-safe-area-context 라이브러리에 있는 ueSafeAreaInsets() 훅을 이용해 사용하려 했지만 SafeAreaProvider보다 먼저 선언이 되어 오류 발생
+
+```js
+export default function App() {
+  const insets = useSafeAreaInsets()
+  console.log(insets)
+  ....
+  return(
+    <SafeAreaProvider>
+     기존 코드 ...
+    </SafeAreaProvider>
+  )
+}
+
+```
+
+3. SafeAreProvider 안에서 SafeAreaInsetsContext.Consumer를 이용해 구현
+
+```js
+<SafeAreaInsetsContext.Consumer>
+  {(insets) => {
+    console.log(insets); // {"bottom": 34, "left": 0, "right": 0, "top": 59}
+    return (
+      <FlatList
+        contentContainerStyle={{ paddingTop: insets.top }}
+        keyExtractor={(_, index) => `column-${index}`}
+        data={columns}
+        renderItem={renderItem}
+        numColumns={7}
+        ListHeaderComponent={ListHeaderComponent}
+      />
+    );
+  }}
+</SafeAreaInsetsContext.Consumer>
+```
+
 </div>
 </details>
