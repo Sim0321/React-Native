@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import {
+  Alert,
   FlatList,
   Image,
   Keyboard,
@@ -87,9 +88,22 @@ export default function App() {
 
   const renderItem = ({ item: todo }) => {
     const isDone = todo.isDone;
-
+    const onPress = () => toggleTodo(todo.id);
+    const onLongPress = () =>
+      Alert.alert("삭제하시겠어요?", "", [
+        {
+          style: "cancel",
+          text: "아니오",
+        },
+        {
+          text: "네",
+          onPress: () => removeTodo(todo.id),
+        },
+      ]);
     return (
       <Pressable
+        onPress={onPress}
+        onLongPress={onLongPress}
         style={{
           width: ITEM_WIDTH,
           // backgroundColor: todo.id % 2 === 0 ? "pink" : "lightblue",
@@ -131,7 +145,7 @@ export default function App() {
 
         <SafeAreaInsetsContext.Consumer>
           {(insets) => {
-            console.log(insets);
+            // console.log(insets);
             return (
               <>
                 <KeyboardAvoidingView
