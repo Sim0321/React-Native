@@ -13,6 +13,7 @@ import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useEffect, useState } from "react";
 import { useCalendar } from "./hook/use-calendar";
+import { useTodoList } from "./hook/use-todo-list";
 
 const columnSize = 35;
 
@@ -29,6 +30,8 @@ export default function App() {
     subtract1Month,
     add1Month,
   } = useCalendar(now);
+
+  const {} = useTodoList(selectedDate);
 
   const columns = getCalendarColumns(selectedDate);
 
