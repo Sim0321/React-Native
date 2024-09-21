@@ -45,6 +45,7 @@ export default function App() {
   } = useCalendar(now);
 
   const {
+    todoList,
     filteredTodoList,
     addTodo,
     removeTodo,
@@ -70,6 +71,7 @@ export default function App() {
     return (
       <View>
         <Calendar
+          todoList={todoList}
           selectedDate={selectedDate}
           onPressLeftArrow={onPressLeftArrow}
           onPressRightArrow={onPressRightArrow}

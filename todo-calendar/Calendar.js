@@ -9,6 +9,7 @@ import { COLUMN_SIZE, getDayColor, getDayText } from "./util";
 
 export default ({
   selectedDate,
+  todoList,
   onPressLeftArrow,
   onPressRightArrow,
   onPressHeaderDate,
@@ -17,7 +18,15 @@ export default ({
 }) => {
   const currentDateText = dayjs(selectedDate).format("YYYY.MM.DD");
 
-  const Column = ({ text, color, opacity, disabled, onPress, isSelected }) => {
+  const Column = ({
+    text,
+    color,
+    opacity,
+    disabled,
+    onPress,
+    isSelected,
+    hasTodo,
+  }) => {
     return (
       <TouchableOpacity
         disabled={disabled}
@@ -31,7 +40,11 @@ export default ({
           borderRadius: COLUMN_SIZE / 2,
         }}
       >
-        <Text style={{ color, opacity }}>{text}</Text>
+        <Text
+          style={{ color, opacity, fontWeight: hasTodo ? "bold" : "normal" }}
+        >
+          {text}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -98,6 +111,10 @@ export default ({
     const onPress = () => onPressDate(date);
 
     const isSelected = dayjs(date).isSame(selectedDate, "date");
+
+    const hasTodo = todoList.find((todo) =>
+      dayjs(todo.date).isSame(dayjs(date), "date")
+    );
     return (
       <Column
         text={dateText}
@@ -105,6 +122,7 @@ export default ({
         opacity={isCurrentMonth ? 1 : 0.4}
         onPress={onPress}
         isSelected={isSelected}
+        hasTodo={hasTodo}
       />
     );
   };
