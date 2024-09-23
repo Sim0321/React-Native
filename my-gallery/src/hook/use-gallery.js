@@ -11,9 +11,12 @@ export const useGallery = () => {
   const [images, setImages] = useState([]);
   const [selectedAlbum, setSelectedAlbum] = useState(defaultAlbum);
   const [albums, setAlbums] = useState([defaultAlbum]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [textInputModalVisible, setTextInputModalVisible] = useState(false);
+  const [bigImgModalVisible, setBigImgModalVisible] = useState(false);
   const [albumTitle, setAlbumTitle] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -57,8 +60,11 @@ export const useGallery = () => {
 
   const resetAlbumTitle = () => setAlbumTitle("");
 
-  const openModal = () => setModalVisible(true);
-  const closeModal = () => setModalVisible(false);
+  const openTextInputModal = () => setTextInputModalVisible(true);
+  const closeTextInputModal = () => setTextInputModalVisible(false);
+
+  const openBigImgModal = () => setBigImgModalVisible(true);
+  const closeBigImgModal = () => setBigImgModalVisible(false);
 
   const openDropDown = () => setIsDropdownOpen(true);
   const closeDropDown = () => setIsDropdownOpen(false);
@@ -112,6 +118,12 @@ export const useGallery = () => {
     ]);
   };
 
+  const selectImage = (image) => {
+    setSelectedImage(image);
+  };
+
+  // console.log(selectedImage);
+
   // useEffect(() => {
   //   console.log("images :: ", images);
   // }, [images]);
@@ -121,9 +133,9 @@ export const useGallery = () => {
     imagesWithAddButton,
     pickImage,
     deleteImg,
-    modalVisible,
-    openModal,
-    closeModal,
+    textInputModalVisible,
+    openTextInputModal,
+    closeTextInputModal,
     albumTitle,
     setAlbumTitle,
     addAlbum,
@@ -134,5 +146,11 @@ export const useGallery = () => {
     albums,
     selectAlbum,
     deleteAlbum,
+    bigImgModalVisible,
+    openBigImgModal,
+    closeBigImgModal,
+    selectedImage,
+    setSelectedImage,
+    selectImage,
   };
 };
