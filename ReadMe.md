@@ -111,3 +111,14 @@ export default function App() {
 
 </div>
 </details>
+
+<details>
+<summary>나의 이미지 갤러리</summary>
+<div markdown="4">
+
+### 내장 갤러리
+
+- `expo-image-picker`를 이용한 갤러리
+
+</div>
+</details>
