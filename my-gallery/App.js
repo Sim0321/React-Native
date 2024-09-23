@@ -40,8 +40,11 @@ export default function App() {
     openBigImgModal,
     closeBigImgModal,
     selectedImage,
-    setSelectedImage,
     selectImage,
+    moveToPreviousImage,
+    moveToNextImage,
+    showPreviousArrow,
+    showNextArrow,
   } = useGallery();
 
   const onPressOpenGallery = () => {
@@ -94,6 +97,14 @@ export default function App() {
 
   const onPressBigImgModalBackdrop = () => {
     closeBigImgModal();
+  };
+
+  const onPressLeftArrow = () => {
+    moveToPreviousImage();
+  };
+
+  const onPressRightArrow = () => {
+    moveToNextImage();
   };
 
   const renderItem = ({ item: image, index }) => {
@@ -154,6 +165,10 @@ export default function App() {
         modalVisible={bigImgModalVisible}
         onPressBackdrop={onPressBigImgModalBackdrop}
         selectedImage={selectedImage}
+        onPressLeftArrow={onPressLeftArrow}
+        onPressRightArrow={onPressRightArrow}
+        showPreviousArrow={showPreviousArrow}
+        showNextArrow={showNextArrow}
       />
 
       <FlatList

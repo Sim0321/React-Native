@@ -1,6 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
-``;
 
 const HEADER_HEIGHT = 50;
 

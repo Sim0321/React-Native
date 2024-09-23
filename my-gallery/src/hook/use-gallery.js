@@ -122,11 +122,37 @@ export const useGallery = () => {
     setSelectedImage(image);
   };
 
-  // console.log(selectedImage);
+  const moveToPreviousImage = () => {
+    const selectedImageIndex = filteredImages.findIndex(
+      (image) => image.id === selectedImage.id
+    );
+    const previousImageIndex = selectedImageIndex - 1;
 
-  // useEffect(() => {
-  //   console.log("images :: ", images);
-  // }, [images]);
+    if (previousImageIndex < 0) return;
+
+    const previousImage = filteredImages[previousImageIndex];
+    setSelectedImage(previousImage);
+  };
+
+  const showPreviousArrow =
+    filteredImages.findIndex((image) => image.id === selectedImage?.id) !== 0;
+
+  const showNextArrow =
+    filteredImages.findIndex((image) => image.id === selectedImage?.id) !==
+    filteredImages.length - 1;
+
+  const moveToNextImage = () => {
+    const selectedImageIndex = filteredImages.findIndex(
+      (image) => image.id === selectedImage.id
+    );
+    const nextImageIndex = selectedImageIndex + 1;
+
+    if (nextImageIndex > filteredImages.length - 1 || nextImageIndex === -1)
+      return;
+
+    const nextImage = filteredImages[nextImageIndex];
+    setSelectedImage(nextImage);
+  };
 
   return {
     selectedAlbum,
@@ -152,5 +178,9 @@ export const useGallery = () => {
     selectedImage,
     setSelectedImage,
     selectImage,
+    moveToPreviousImage,
+    moveToNextImage,
+    showPreviousArrow,
+    showNextArrow,
   };
 };
