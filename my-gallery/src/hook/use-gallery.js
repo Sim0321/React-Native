@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { Alert } from "react-native";
 
+const defaultAlbum = {
+  id: 1,
+  title: "기본",
+};
+
 export const useGallery = () => {
   const [images, setImages] = useState([]);
-  // console.log(image);
+  const [selectedAlbum, setSelectedAlbum] = useState(defaultAlbum);
+  const [albums, setAlbums] = useState([defaultAlbum]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [albumTitle, setAlbumTitle] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -15,14 +24,13 @@ export const useGallery = () => {
       quality: 1,
     });
 
-    // console.log(result);
-
     if (!result.canceled) {
       const lastId = images.length === 0 ? 0 : images[images.length - 1].id;
       // 삭제를 위해 고유한 key 값
       const newImage = {
         id: lastId + 1,
         uri: result.assets[0].uri,
+        albumId: selectedAlbum.id,
       };
 
       setImages([...images, newImage]);
@@ -45,18 +53,63 @@ export const useGallery = () => {
     ]);
   };
 
+  // console.log(albumTitle);
+
+  const resetAlbumTitle = () => setAlbumTitle("");
+
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
+  const openDropDown = () => setIsDropdownOpen(true);
+  const closeDropDown = () => setIsDropdownOpen(false);
+
+  const addAlbum = () => {
+    const lastId = albums.length === 0 ? 0 : albums[albums.length - 1].id;
+    const newAlbum = {
+      id: lastId + 1,
+      title: albumTitle,
+      albumId: selectedAlbum.id,
+    };
+    setAlbums([...albums, newAlbum]);
+  };
+
+  const selectAlbum = (album) => {
+    console.log("78::", album);
+    setSelectedAlbum(album);
+  };
+
+  const filteredImages = images.filter(
+    (image) => image.albumId === selectedAlbum.id
+  );
+
   const imagesWithAddButton = [
-    ...images,
+    ...filteredImages,
     {
       id: -1,
       uri: "",
     },
   ];
 
+  // useEffect(() => {
+  //   console.log("images :: ", images);
+  // }, [images]);
+
   return {
-    images,
+    selectedAlbum,
     imagesWithAddButton,
     pickImage,
     deleteImg,
+    modalVisible,
+    openModal,
+    closeModal,
+    albumTitle,
+    setAlbumTitle,
+    addAlbum,
+    resetAlbumTitle,
+    isDropdownOpen,
+    openDropDown,
+    closeDropDown,
+    albums,
+    selectAlbum,
   };
 };

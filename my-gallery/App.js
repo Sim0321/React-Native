@@ -10,14 +10,31 @@ import {
 } from "react-native";
 
 import { useGallery } from "./src/hook/use-gallery";
+import MyDropDownPicker from "./src/components/MyDropDownPicker";
+import TextInputModal from "./src/components/TextInputModal";
 
 const WIDTH = Dimensions.get("screen").width; // 전체 길이
 const COLUMN_SIZE = WIDTH / 3;
 
 export default function App() {
-  const { images, imagesWithAddButton, pickImage, deleteImg } = useGallery();
-
-  console.log(imagesWithAddButton);
+  const {
+    selectedAlbum,
+    imagesWithAddButton,
+    pickImage,
+    deleteImg,
+    modalVisible,
+    openModal,
+    closeModal,
+    albumTitle,
+    setAlbumTitle,
+    addAlbum,
+    resetAlbumTitle,
+    isDropdownOpen,
+    openDropDown,
+    closeDropDown,
+    albums,
+    selectAlbum,
+  } = useGallery();
 
   const onPressOpenGallery = () => {
     pickImage();
@@ -25,6 +42,37 @@ export default function App() {
 
   const onLongPressImage = (imageId) => {
     deleteImg(imageId);
+  };
+
+  const onPressAddAlbum = () => {
+    openModal();
+  };
+
+  const onSubmitEditing = () => {
+    if (!albumTitle) return;
+    // 1. 앨범에 타이틀 추가
+    addAlbum();
+
+    // 2. TextInput의 value 초기화 && 모달 닫기
+    closeModal();
+    resetAlbumTitle();
+  };
+
+  const onPressBackdrop = () => {
+    closeModal();
+  };
+
+  const onPressHeader = () => {
+    if (isDropdownOpen) {
+      closeDropDown();
+    } else {
+      openDropDown();
+    }
+  };
+
+  const onPressAlbum = (album) => {
+    selectAlbum(album);
+    closeDropDown();
   };
 
   const renderItem = ({ item: { id, uri }, index }) => {
@@ -57,11 +105,33 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* 앨범 DropDown, 앨범 추가 버튼 */}
+      <MyDropDownPicker
+        selectedAlbum={selectedAlbum}
+        onPressAddAlbum={onPressAddAlbum}
+        isDropdownOpen={isDropdownOpen}
+        onPressHeader={onPressHeader}
+        albums={albums}
+        onPressAlbum={onPressAlbum}
+      />
+
+      {/* 앨범을 추가하는 TextInputModal */}
+      <TextInputModal
+        modalVisible={modalVisible}
+        albumTitle={albumTitle}
+        setAlbumTitle={setAlbumTitle}
+        onSubmitEditing={onSubmitEditing}
+        onPressBackdrop={onPressBackdrop}
+      />
+
       <FlatList
         data={imagesWithAddButton}
         renderItem={renderItem}
         // horizontal // 가로로 나열
         numColumns={3} // 가로로 몇개만 놓고 싶을 때
+        style={{
+          zIndex: -1,
+        }}
       />
     </SafeAreaView>
   );

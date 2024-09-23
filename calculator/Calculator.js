@@ -13,8 +13,6 @@ const oneBlockWidth = 80;
 
 // Button type: 'result' | 'operator' | 'num'
 const Button = ({ text, onPress, flex, type, isSelected }) => {
-  console.log(flex);
-
   const backgroundColor =
     type === "reset"
       ? COLORMAP.RESET

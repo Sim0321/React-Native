@@ -77,7 +77,6 @@ export const useTodoList = (selectedDate) => {
 
   const init = async () => {
     const result = await AsyncStorage.getItem(TODO_LIST_KEY);
-    // console.log(result);
     if (result) {
       const newTodoList = JSON.parse(result);
       setTodoList(newTodoList);
