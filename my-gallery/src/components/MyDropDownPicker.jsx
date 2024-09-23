@@ -11,6 +11,7 @@ export default ({
   isDropdownOpen,
   albums,
   onPressAlbum,
+  onLongPressAlbum,
 }) => {
   return (
     <View>
@@ -26,7 +27,7 @@ export default ({
       >
         <Text style={{ fontWeight: "bold" }}>{selectedAlbum.title}</Text>
         <SimpleLineIcons
-          name={isDropdownOpen ? "arrow-down" : "arrow-up"}
+          name={isDropdownOpen ? "arrow-up" : "arrow-down"}
           size={12}
           color="black"
           style={{ marginLeft: 8 }}
@@ -62,6 +63,7 @@ export default ({
             const isSelectedAlbum = album.id === selectedAlbum.id;
             return (
               <TouchableOpacity
+                activeOpacity={1}
                 style={{
                   paddingVertical: 12,
                   width: "100%",
@@ -70,6 +72,7 @@ export default ({
                   backgroundColor: "#fff",
                 }}
                 onPress={() => onPressAlbum(album)}
+                onLongPress={() => onLongPressAlbum(album.id)}
                 key={`album-${index}`}
               >
                 <Text
