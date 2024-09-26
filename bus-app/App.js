@@ -5,6 +5,7 @@ import {
   SectionList,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import BusInfo from "./src/components/BusInfo";
@@ -19,9 +20,74 @@ import { busStop } from "./src/data";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import Margin from "./src/components/Margin";
+import BookmarkButton from "./src/components/BookmarkButton";
+
+const busStopBookmarkSize = 22;
+const busStopBookmarkPaddingHorizontal = 6;
+
 export default function App() {
   const sections = getSections(busStop.buses);
   const [now, setNow] = useState(dayjs());
+
+  const IconButton = ({ iconName }) => {
+    return (
+      <TouchableOpacity style={{ padding: 10 }}>
+        <SimpleLineIcons name={iconName} size={20} color={COLOR.WHITE} />
+      </TouchableOpacity>
+    );
+  };
+
+  const onPressBusStopBookmark = () => {
+    // TODO
+  };
+
+  const ListHeaderComponent = () => {
+    return (
+      <SafeAreaView style={{ backgroundColor: COLOR.GRAY_3 }}>
+        {/* 뒤로가기와 홈 아이콘 */}
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <IconButton iconName="arrow-left" />
+          <IconButton iconName="home" />
+        </View>
+
+        {/* 정류소 번호, 이름, 방향 */}
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Margin height={10} />
+
+          <Text style={{ color: COLOR.WHITE, fontSize: 13 }}>{busStop.id}</Text>
+          <Margin height={4} />
+
+          <Text style={{ color: COLOR.WHITE, fontSize: 20 }}>
+            {busStop.name}
+          </Text>
+          <Margin height={4} />
+
+          <Text style={{ color: COLOR.GRAY_1, fontSize: 14 }}>
+            {busStop.directionDescription}
+          </Text>
+          <Margin height={20} />
+
+          {/* 북마크 */}
+          <BookmarkButton
+            size={busStopBookmarkSize}
+            onPress={onPressBusStopBookmark}
+            isBookmarked={busStop.isBookmarked}
+            style={{
+              borderWidth: 0.3,
+              borderColor: COLOR.GRAY_1,
+              borderRadius:
+                (busStopBookmarkSize + busStopBookmarkPaddingHorizontal * 2) /
+                2,
+              padding: busStopBookmarkPaddingHorizontal,
+            }}
+          />
+          <Margin height={25} />
+        </View>
+      </SafeAreaView>
+    );
+  };
 
   const renderSectionHeader = ({ section: { title } }) => {
     return (
@@ -86,25 +152,25 @@ export default function App() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const newNow = dayjs();
-      setNow(newNow);
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
+    // const interval = setInterval(() => {
+    //   const newNow = dayjs();
+    //   setNow(newNow);
+    // }, 1000);
+    // return () => {
+    //   clearInterval(interval);
+    // };
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <SectionList
         style={{ width: "100%", flex: 1 }}
         sections={sections}
+        ListHeaderComponent={ListHeaderComponent}
         renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

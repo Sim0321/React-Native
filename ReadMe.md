@@ -132,7 +132,7 @@ export default function App() {
 - FlatList VS SectionList
 
   - SectionList는 sections라는 prop을 받아야함, FlatList는 그냥 data를 받으면 됨.
-  - SectionList는 renderSectionHeader를 prop으로 받음, FlatList는 ListHeaderComponent를 받음
+  - SectionList는 renderSectionHeader를 prop으로 받음
 
 - </div>
   </details>
