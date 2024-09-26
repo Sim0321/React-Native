@@ -23,6 +23,24 @@ export default function App() {
   const sections = getSections(busStop.buses);
   const [now, setNow] = useState(dayjs());
 
+  const renderSectionHeader = ({ section: { title } }) => {
+    return (
+      <View
+        style={{
+          paddingLeft: 13,
+          paddingVertical: 3,
+          backgroundColor: COLOR.GRAY_1,
+          borderTopWidth: 0.5,
+          borderBottomWidth: 0.5,
+          borderTopColor: COLOR.GRAY_2,
+          borderBottomColor: COLOR.GRAY_2,
+        }}
+      >
+        <Text style={{ color: COLOR.GRAY_4, fontSize: 12 }}>{title}</Text>
+      </View>
+    );
+  };
+
   const renderItem = ({ item: bus }) => {
     const numColor = getBusNumColorByType(bus.type);
 
@@ -83,7 +101,7 @@ export default function App() {
       <SectionList
         style={{ width: "100%", flex: 1 }}
         sections={sections}
-        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+        renderSectionHeader={renderSectionHeader}
         renderItem={renderItem}
       />
     </SafeAreaView>
