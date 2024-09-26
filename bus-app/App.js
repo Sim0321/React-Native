@@ -157,7 +157,7 @@ export default function App() {
   const ListFooterComponent = () => <Margin height={30} />;
 
   const onRefresh = () => {
-    console.log("on Refresh");
+    // console.log("on Refresh");
     setRefreshing(true);
   };
 
