@@ -4,8 +4,10 @@ import { COLOR } from "../color";
 import AlarmButton from "./AlarmButton";
 import NextBusInfo from "./NextBusInfo";
 import Margin from "./Margin";
+import { useTheme } from "../hooks/useTheme";
 
 export default ({
+  NEWCOLOR,
   onPress,
   isBookmarked,
   num,
@@ -15,7 +17,11 @@ export default ({
 }) => {
   return (
     <View
-      style={{ flexDirection: "row", height: 75, backgroundColor: COLOR.WHITE }}
+      style={{
+        flexDirection: "row",
+        height: 75,
+        backgroundColor: NEWCOLOR.WHITE_BLACK,
+      }}
     >
       <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
         {/* 북마크 */}
@@ -30,7 +36,7 @@ export default ({
         <View style={{ flex: 1 }}>
           <Text style={{ color: numColor, fontSize: 20 }}>{num}</Text>
           <Margin height={5} />
-          <Text style={{ fontSize: 13, color: COLOR.GRAY_3 }}>
+          <Text style={{ fontSize: 13, color: NEWCOLOR.GRAY_3_GRAY_2 }}>
             {directionDescription} 방향
           </Text>
         </View>
@@ -61,7 +67,11 @@ export default ({
         </View>
 
         {/* 알람아이콘 */}
-        <AlarmButton onPress={() => {}} style={{ paddingHorizontal: 12 }} />
+        <AlarmButton
+          NEWCOLOR={NEWCOLOR}
+          onPress={() => {}}
+          style={{ paddingHorizontal: 12 }}
+        />
       </View>
       {/* <Margin height={10} /> */}
     </View>
