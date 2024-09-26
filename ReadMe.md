@@ -119,7 +119,6 @@ export default function App() {
 ### 내장 갤러리
 
 - `expo-image-picker`를 이용한 갤러리
-- 앨범 개수 제한 후 수익화 광고로 제한 해제
 
 </div>
 </details>
