@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import { COLOR } from "../color";
+import Margin from "./Margin";
 
 export default ({
   hasInfo, // 도착 정보 없음 일때
@@ -10,7 +11,14 @@ export default ({
   if (!hasInfo)
     return <Text style={{ color: COLOR.GRAY_2 }}>도착 정보 없음</Text>;
   return (
-    <View style={{ flexDirection: "row", alignItems: "center" }}>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginBottom: 5,
+      }}
+    >
       <Text style={{ color: COLOR.BLACK, marginRight: 10 }}>
         {remainedTimeText}
       </Text>
@@ -28,6 +36,7 @@ export default ({
         <Text style={{ color: COLOR.GRAY_3, marginRight: 3 }}>
           {numOfRemainedStops}번째전
         </Text>
+        <Margin height={4} />
         <Text style={{ color: COLOR.CORAL }}>{seatStatusText}</Text>
       </View>
     </View>

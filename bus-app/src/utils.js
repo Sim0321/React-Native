@@ -48,7 +48,7 @@ export const getBusNumColorByType = (type) => {
 export const getRemainedTimeText = (now, arrivalTime) => {
   const remainMinute = dayjs(arrivalTime).diff(dayjs(now), "minute");
   const remainSecond = dayjs(arrivalTime).diff(dayjs(now), "second") % 60;
-  if (remainMinute <= 0 && remainSecond <= 0) return "도착 또는 출발";
+  if (remainMinute <= 0 && remainSecond <= 0) return "도착"; // 또는 출발
   if (remainMinute <= 0 && remainSecond < 30) return "곧 도착";
   if (remainMinute <= 0) return `${remainSecond}초`;
   return `${remainMinute}분 ${remainSecond}초`;

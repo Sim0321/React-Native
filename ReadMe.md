@@ -134,5 +134,8 @@ export default function App() {
   - SectionList는 sections라는 prop을 받아야함, FlatList는 그냥 data를 받으면 됨.
   - SectionList는 renderSectionHeader를 prop으로 받음
 
-- </div>
+- refreshControl
+  - FlatList, ScrollView 등 스크롤이 가능한 곳에서 스크롤Y가 0미만으로 되면 실행되는 이벤트
+
+</div>
   </details>
