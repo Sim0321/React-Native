@@ -34,9 +34,9 @@ export default ({
       <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
         {/* M분 S초 / N번째 전 / 여유 */}
         <View style={{ flex: 1 }}>
-          {processedNextBusInfos.map((info, index) => (
+          {processedNextBusInfos.map((info, i) => (
             <NextBusInfo
-              key={`next-bux-info-${index}`}
+              key={`next-bux-info-${i}`}
               hasInfo={info.hasInfo}
               remainedTimeText={info.remainedTimeText}
               numOfRemainedStops={info.numOfRemainedStops}
