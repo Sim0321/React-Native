@@ -3,8 +3,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { COLOR } from "../color";
 import { useTheme } from "../hooks/useTheme";
 
-export default ({ onPress, style }) => {
-  const { NEWCOLOR } = useTheme();
+export default ({ onPress, style, NEWCOLOR }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Ionicons
