@@ -4,8 +4,8 @@ import { getLocales } from "expo-localization";
 import { I18n } from "i18n-js";
 
 const i18n = new I18n({
-  en: { welcome: "Hello" },
-  ja: { welcome: "いらっしゃいませ" },
+  en: { welcome: "Hello!" },
+  ja: { welcome: "いらっしゃいませ!" },
 });
 
 i18n.locale = getLocales()[0].languageCode;
