@@ -122,3 +122,17 @@ export default function App() {
 
 </div>
 </details>
+
+<details>
+<summary>버스 앱</summary>
+<div markdown="5">
+
+### 버스 앱
+
+- FlatList VS SectionList
+
+  - SectionList는 sections라는 prop을 받아야함, FlatList는 그냥 data를 받으면 됨.
+  - SectionList는 renderSectionHeader를 prop으로 받음, FlatList는 ListHeaderComponent를 받음
+
+- </div>
+  </details>
