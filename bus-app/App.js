@@ -9,37 +9,69 @@ import {
 } from "react-native";
 import BusInfo from "./src/components/BusInfo";
 import { COLOR } from "./src/color";
+import {
+  getBusNumColorByType,
+  getRemainedTimeText,
+  getSeatStatusText,
+  getSections,
+} from "./src/utils";
+import { busStop } from "./src/data";
+import dayjs from "dayjs";
 
 export default function App() {
-  return (
-    <SafeAreaView style={styles.container}>
-      {/* <View style={{ flex: 1 }}>
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}>SectionList</Text>
-        <SectionList
-          sections={[
-            {
-              title: "간선버스",
-              data: [{ busNum: 146 }, { busNum: 360 }, { busNum: 740 }],
-            },
-            {
-              title: "지선버스",
-              data: [{ busNum: 3412 }],
-            },
-            {
-              title: "직행버스",
-              data: [{ busNum: 1100 }, { busNum: 1700 }],
-            },
-          ]}
-          renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
-          renderItem={({ item }) => <Text>{item.busNum}</Text>}
-        />
-      </View> */}
+  const sections = getSections(busStop.buses);
+  const now = dayjs();
+
+  const renderItem = ({ item: bus }) => {
+    const numColor = getBusNumColorByType(bus.type);
+
+    // undefined 값 null로 통일하기 위해
+    const firstNextBusInfo = bus.nextBusInfos?.[0] ?? null; // undefined ?? null -> null
+    const secondNextBusInfo = bus.nextBusInfos?.[1] ?? null; // { ... } ?? null -> { ... }
+    const newNextBusInfos =
+      !firstNextBusInfo && !secondNextBusInfo
+        ? [null]
+        : [firstNextBusInfo, secondNextBusInfo];
+
+    // if (bus.num === 2000) {
+    //   console.log(bus.num, 'newNextBusInfos', newNextBusInfos);
+    // }
+
+    const processedNextBusInfos = newNextBusInfos.map((info) => {
+      if (!info)
+        return {
+          hasInfo: false,
+          remainedTimeText: "도착 정보 없음",
+        };
+      const { arrivalTime, numOfRemainedStops, numOfPassengers } = info;
+      const remainedTimeText = getRemainedTimeText(now, arrivalTime);
+      const seatStatusText = getSeatStatusText(bus.type, numOfPassengers);
+      return {
+        hasInfo: true,
+        remainedTimeText,
+        numOfRemainedStops,
+        seatStatusText,
+      };
+    });
+
+    return (
       <BusInfo
         onPress={() => {}}
-        isBookmarked={true}
-        num={146}
-        directionDescription={"강남역 사거리"}
-        numColor={COLOR.BUS_B}
+        isBookmarked={bus.isBookmarked}
+        num={bus.num}
+        directionDescription={bus.directionDescription}
+        numColor={numColor}
+        processedNextBusInfos={processedNextBusInfos}
+      />
+    );
+  };
+  return (
+    <SafeAreaView style={styles.container}>
+      <SectionList
+        style={{ width: "100%", flex: 1 }}
+        sections={sections}
+        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+        renderItem={renderItem}
       />
     </SafeAreaView>
   );
