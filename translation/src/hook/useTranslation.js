@@ -17,6 +17,9 @@ const i18n = new I18n({
   zh,
 });
 
+i18n.enableFallback = true;
+i18n.defaultLocale = "en";
+
 // console.log(i18n);
 
 const deviceLanguage = getLocales()[0].languageCode;
