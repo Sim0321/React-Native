@@ -7,6 +7,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import LoadingView from "./src/components/LoadingView";
 import LottieView from "lottie-react-native";
+import { useFonts } from "expo-font";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,6 +19,10 @@ export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const locales = ["ko", "en", "ja", "zh", "es"];
+
+  const [fontsLoaded] = useFonts({
+    RIDIBatang: require("./assets/fonts/RIDIBatang.otf"),
+  });
 
   const y = new Date().getFullYear();
   const m = new Date().getMonth() + 1;
@@ -32,10 +37,10 @@ export default function App() {
   }, [cookieKey]);
 
   useEffect(() => {
-    if (locale !== null) {
+    if (locale !== null && fontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [locale]);
+  }, [locale, fontsLoaded]);
 
   if (!isLoaded) return <LoadingView />;
 
@@ -88,12 +93,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   todayText: {
+    fontFamily: "RIDIBatang",
     position: "absolute",
     top: 70,
     fontSize: 13,
     color: "#8b658f",
   },
   cookieText: {
+    fontFamily: "RIDIBatang",
     fontSize: 22,
     color: "#372538",
     textAlign: "center",
