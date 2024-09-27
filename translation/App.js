@@ -17,6 +17,8 @@ export default function App() {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const locales = ["ko", "en", "ja", "zh", "es"];
+
   const y = new Date().getFullYear();
   const m = new Date().getMonth() + 1;
   const d = new Date().getDate();
@@ -59,26 +61,14 @@ export default function App() {
 
         <View style={styles.bottomContainer}>
           <View style={styles.buttonsContainer}>
-            <Button
-              onPress={() => setLocale("ko")}
-              isSelected={locale === "ko"}
-              text="KO"
-            />
-            <Button
-              onPress={() => setLocale("en")}
-              isSelected={locale === "en"}
-              text="EN"
-            />
-            <Button
-              onPress={() => setLocale("ja")}
-              isSelected={locale === "ja"}
-              text="JA"
-            />
-            <Button
-              onPress={() => setLocale("zh")}
-              isSelected={locale === "zh"}
-              text="ZH"
-            />
+            {locales.map((item) => (
+              <Button
+                key={item}
+                onPress={() => setLocale(item)}
+                isSelected={locale === item}
+                text={item.toUpperCase()}
+              />
+            ))}
           </View>
         </View>
       </SafeAreaView>
@@ -89,10 +79,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#fff",
-    // backgroundColor: "purple",
-    alignItems: "center",
-    justifyContent: "center",
   },
 
   topContainer: {

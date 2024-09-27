@@ -8,6 +8,7 @@ const ko = require("../lang/lang.ko.json");
 const en = require("../lang/lang.en.json");
 const ja = require("../lang/lang.ja.json");
 const zh = require("../lang/lang.zh.json");
+const es = require("../lang/lang.es.json");
 
 const LOCALE_KEY = "locale";
 
@@ -16,6 +17,7 @@ const i18n = new I18n({
   en,
   ja,
   zh,
+  es,
 });
 
 i18n.enableFallback = true;
