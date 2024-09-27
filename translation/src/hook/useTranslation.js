@@ -14,12 +14,21 @@ const i18n = new I18n({
   zh,
 });
 
-console.log(i18n);
+// console.log(i18n);
 
 const deviceLanguage = getLocales()[0].languageCode;
 
 export const useTranslation = () => {
+  const [locale, setLocale] = useState(null);
+
+  useEffect(() => {
+    setLocale(deviceLanguage);
+    // setLocale("ja");
+  }, []);
+
   return {
-    t: (key) => i18n.t(key),
+    locale,
+    setLocale,
+    t: (key) => i18n.t(key, { locale }),
   };
 };
