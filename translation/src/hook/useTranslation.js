@@ -37,7 +37,6 @@ export const useTranslation = () => {
     } else {
       _setLocale(deviceLanguage);
     }
-    // console.log("fs ::", fs);
   };
 
   useEffect(() => {
