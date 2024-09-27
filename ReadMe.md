@@ -138,4 +138,17 @@ export default function App() {
   - FlatList, ScrollView 등 스크롤이 가능한 곳에서 스크롤Y가 0미만으로 되면 실행되는 이벤트
 
 </div>
-  </details>
+</details>
+
+<details>
+<summary>번역 포춘쿠키</summary>
+<div markdown="6">
+
+### 번역기
+
+- expo-localization
+  - 기기에 설정된 첫번째 언어를 가져오게 해주는 것
+  - 현지화(로케일) 지원
+- i18n-js
+  - </div>
+    </details>
