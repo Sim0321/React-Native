@@ -1,18 +1,18 @@
-import React, { Component } from "react";
+import React from "react";
 import { Button, Text, View } from "react-native";
 
-export class ScreenC extends Component {
+export class ScreenC extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>이것은 Screen C입니다.</Text>
+        <Text>이것은 ScreenC라고 합니다.</Text>
 
-        <Button
-          title={"Screen E로 이동"}
+        {/* <Button
+          title="뒤로가기"
           onPress={() => {
-            this.props.navigation.push("ScreenE");
+            console.log("뒤로가기");
           }}
-        />
+        /> */}
       </View>
     );
   }
