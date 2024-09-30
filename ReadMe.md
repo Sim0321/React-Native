@@ -3,6 +3,42 @@
 - `npx create-expo-app 프로젝트 이름--template blank` JS로 시작
 - `npx create-expo-app 프로젝트 이름` TS로 시작
 
+## 학습
+
+### React Navigation
+
+> React-Native에서 사용하는 화면 이동을 위한 라이브러리
+
+- Stack, BottomTab, Drawer등 앱 개발시 많이 사용하는 화면 이동에 대해 각 플랫폼 환경에 맞도록 쉽게 변환 해 주도록 되어있음
+- 구성 요소
+  - Navigator + Screen
+    - Navigator : Navigation이 어떤 구조로 되어있는지 나타내는 컴포넌트(Screen의 집합)
+    - Screen : 화면을 그리는 컴포넌트
+- Stack Navigator : Stack과 동일한 자료 구조로 화면을 그리는 Navigator
+  - options(presentation) 
+    - card : 오른쪽에서 왼쪽으로 이동하는 애니메이션
+    - modal : 아래에서 위로 이동하는 애니메이션
+- Drawer Navigator : 슬라이드를 통해 이동한 Screen들을 나타내는 Navigator
+- Tab Navigator : 하단에 탭의 형태로 제공
+  - options(backBehavior)
+  - Android에서 H/W Back Button을 눌렀을 때 어떻게 이동하는지 지정
+    - firstRoute : 선언상 제일 처음에 있는 탭으로 이동
+    - initialRoute : 최초 지정한 탭으로 이동
+    - order : 탭을 선언한 순으로 이동
+    - history : 이동한 히스토리 역순으로 이동
+
+- Nesting Navigator
+  - Navigator의 Screen을 Component가 아닌 다른 Navigator로 선언하는 것. 주로, Presentation을 다르게 선언하거나, 조건에 따라 Navigator의 분기가 필요할 때 사용 
+
+- 사용시 주의 사항
+  1. Navigator는 각자의 History를 가지고 있음
+  2. Navigator에서 Screen Param은 전달되지 않음
+  3. 상위 Navigator A의 이벤트를 Navigator B에서 받아 볼 수 없음. focus, blur등 필요한 경우 getParent로 찾아서 등록해야 함
+  4. Tab, Drawer의 하위 Navigator일 경우 Tab 또는 Drawer에 가려짐 
+### React Life Cycle
+
+- constructor -> render -> componentDidMount -> componentWillUnmount
+
 ## 프로젝트
 
 <details>
