@@ -118,6 +118,20 @@
 1. useMemo (기억할 값을 리턴해주는 함수, dependency array)
 2. useCallback (기억할 함수를 리턴해주는 함수, dependency array)
 
+### Redux middleware
+
+- store.dispatch 함수의 실행 뒤 어떠한 작업을 하기 위해 호출
+
+1. redux logger
+2. thunk(특정 작업을 나중에 하기 위해서 만들어둔 함수)
+   - redux-thunk : 비동기 작업을 처리할 때 가장 많이 사용하는 middleware. 객체 대신 함수를 Dispatch 할 수 있게 해주는 것
+3. redux-saga : action의 발생여부를 모니터링 하다가 그 뒤 작업을 진행 하도록 함(제너레이터)
+
+- |       | redux thunk                                 | redux saga                                                                            |
+  | ----- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
+  | props | 낮은 Boilerplate, 이해하기 쉬운 코드        | 초기에 구현해야 할 Boilerplate가 많음 , 순수함수로 작성되기 때문에 테스트 적용이 쉬움 |
+  | cons  | 잘못 다뤄지면 수 없이 많은 콜백 지옥에 빠짐 | 높은 러닝커브(ES6 제너레이터)                                                         |
+
 ## 프로젝트
 
 <details>
@@ -288,5 +302,26 @@ export default function App() {
   - 로딩화면을 띄워주기 위해
   - 보통 움직이는 애니메이션을 표현하려면 GIF 사용, 그러나 길이별로 해상도에 따라서 대응하기 때문에 파일이 무거워진다.
   - Lottie는 애니메이션을 코드로 변환해주기 때문에 Vector 이미지 처럼 사이즈 변경에 손실이 없는 것이 특징
+  </div>
+    </details>
+
+<details>
+<summary>핸드폰 배경화면 다운 앱</summary>
+<div markdown="7">
+
+<!-- <img src="https://github.com/user-attachments/assets/36050a6b-9de1-4cbe-b6fb-eab0000a4813"  width="200" height="400"/> -->
+
+### UI
+
+- react-navigation/native를 이용해 최상단은 StackNavigator로, bottomTab은 BottomTabNavigator로 구현
+
+### 파일 다운로드
+
+- expo의 file system을 이용해 다운로드
+- `FileSystem.createDownloadResumable`과 `downloadAsync`를 이용해 `file:///var/mobile/Containers/Data/Application/26B31479-C1B1-4D09-91ED-4D418B2A1D4C/Documents/ExponentExperienceData/@anonymous/phone-wallpaper-03204172-9059-4918-9ac3-ec83a08ec379/49.jpg` 이 곳에 저장을 시킴
+
+- media-library를 이용해 권한을 부여받은 후 나의 휴대폰 앨범에 저장
+- onPressIn과 onPressOut을 이용해 DetailImageList에 진입 시 애니메이션 추가
+
   </div>
     </details>
