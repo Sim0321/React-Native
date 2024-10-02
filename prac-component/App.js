@@ -10,8 +10,10 @@ import { Divider } from "./src/components/Divider";
 import { Spacer } from "./src/components/Spacer";
 import { TabIcon } from "./src/components/TabIcon";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+
 import { HeaderWithoutCompound } from "./src/components/HeaderWithoutCompound";
 import { Header } from "./src/components/Header/Header";
+
 export default function App() {
   return (
     // <View style={styles.container}>
@@ -88,22 +90,25 @@ export default function App() {
         {/* <HeaderWithoutCompound title="HEADER" /> */}
         <Header>
           <Header.Group>
-            <Header.Icon iconName="arrow-back"></Header.Icon>
-            <Header.Title title="HEADER"></Header.Title>
+            <Header.Icon
+              iconName="arrow-back"
+              onPress={() => console.log("뒤로가기")}
+            />
+            <Header.Title title="HEADER" />
           </Header.Group>
 
-          <Header.Icon iconName="close"></Header.Icon>
+          <Header.Icon iconName="close" onPress={() => console.log("닫기")} />
         </Header>
       </View>
     </SafeAreaProvider>
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});

@@ -66,6 +66,49 @@
 - 제일 작은 단위는 우선적으로 컴포넌트로 만들어 재사용
 - Molecules이상의 단계들 중에서 3회 이상 반복되면 컴포넌트로 만듦 등
 
+### hook에 대해서
+
+- react 16.8 버전에서 탄생
+- functional component에서도 state와 기타 다른 사이트 이펙트를 다루기 위해 탄생 됨
+- functional component
+  - hook 탄생 이전에는 state를 가질 수가 없었기 때문에 주로 dumb component로만 활용, hook의 등장으로 주목받기 시작함
+
+#### 왜 hook을 만들었는가?
+
+1. 컴포넌트간 상태 관련 로직 재사용이 어려움
+   - 매번 같은 상태 관리 로직을 Copy & Paste
+   - 공통화 되지 않다보니 컴포넌트 마다 변경사항을 수정해야 하는 어려움
+2. 컴포넌트가 커질수록 복잡해지는 로직
+   - componentDidmount에서 너무 많은 일을 하게 됨
+   - ex: 컴포넌트 마운트시 api 호출 및 event listener를 subscribe 단일 원칙(SRP)에서 벗어나게 되어 버그가 쉽게 발생(클린 아키텍처)
+3. 혼라을 주는 class
+   - class this 키워드에서 오는 좋지 못한 경험
+
+#### hook 사용의 규칙
+
+1. 모든 hook을 사용할 때 함수의 최상단에서 호출해야만 함
+
+|                       | class 컴포넌트의 동작         | functional 컴포넌트의 동작(렌더링 = 함수호출) |
+| --------------------- | ----------------------------- | --------------------------------------------- |
+| component 생성 시     | Class 생성하여 instance 생성  | function 호출                                 |
+| component 최초 렌더시 | Class 내부 render method 호출 | function 호출                                 |
+| component 업데이트시  | Class 내부 render method 호출 | function 호출                                 |
+
+2. React 함수에서만 hook을 사용해야 함
+
+- 순수함수 같은 곳에서 사용하면 에러
+
+#### 자주 사용하는 훅
+
+1. useScreenSize
+2. useBackHandler(안드로이드를 위한) npm install @react-native-community/hooks
+3. useAppState npm install @react-native-community/hooks
+4. useNavigation, useRoute
+5. uselsFocused, useFocusEffect
+6. useScrollToTop
+7. useMount(컴포넌트가 mount된 시점에 callback 호출)
+8. usePrevious (state의 이전 값을 알아내고자 할 때 사용)
+
 ## 프로젝트
 
 <details>
