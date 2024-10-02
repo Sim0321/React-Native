@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { Typography } from "./src/components/Typography";
 import { LocalImage } from "./src/components/LocalImage";
 import { RemoteImage } from "./src/components/RemoteImage";
+import { Icon } from "./src/components/Icons";
+import { Badge } from "./src/components/Badge";
 
 export default function App() {
   return (
@@ -28,6 +30,21 @@ export default function App() {
         width={200}
         height={200}
       />
+
+      <Icon name="home" size={40} color="red" />
+
+      <Badge fontSize={10}>
+        <Typography>Badge</Typography>
+      </Badge>
+
+      <View>
+        <Badge fontSize={10}>
+          <Typography>Badge</Typography>
+        </Badge>
+        <Badge fontSize={5}>
+          <Icon name="home" size={50} color="black" />
+        </Badge>
+      </View>
     </View>
   );
 }
