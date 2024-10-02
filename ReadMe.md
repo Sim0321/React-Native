@@ -41,6 +41,7 @@
 ### React Life Cycle
 
 - constructor -> render -> componentDidMount -> componentWillUnmount
+![img]()
 
 ### 잘 만들어진 컴포넌트란?
 
@@ -51,6 +52,8 @@
 #### Atomic design pattern이란?
 
 - 작은 단위부터 큰 단위까지의 컴포넌트를 조합해 만들어가는 것
+<img src="https://github.com/user-attachments/assets/e6f4fc5e-6585-4a13-8bc1-7d2124926a99"  width="400" height="200"/>
+
 
 ## 프로젝트
 
