@@ -89,6 +89,8 @@
 <details>
 <summary>계산기</summary>
 <div markdown="2">
+<img src="https://github.com/user-attachments/assets/6df7f50b-0107-4f65-a441-9762694986d9"  width="200" height="400"/>
+
 
 ### UI
 
@@ -111,6 +113,8 @@
 <details>
 <summary>캘린더 투두</summary>
 <div markdown="3">
+
+<img src="https://github.com/user-attachments/assets/46c8c6ae-e816-4530-a460-b5af197dbc36"  width="200" height="400"/>
 
 ### UI
 
@@ -165,6 +169,8 @@ export default function App() {
 <summary>나의 이미지 갤러리</summary>
 <div markdown="4">
 
+<img src="https://github.com/user-attachments/assets/9e0b408b-aecd-45c4-904d-bdd81a48c5e9"  width="200" height="400"/>
+
 ### 내장 갤러리
 
 - `expo-image-picker`를 이용한 갤러리
@@ -175,6 +181,8 @@ export default function App() {
 <details>
 <summary>버스 앱</summary>
 <div markdown="5">
+
+<img src="https://github.com/user-attachments/assets/d238a154-ab92-40a8-8e62-e9abd34dfefd"  width="200" height="400"/>
 
 ### 버스 앱
 
@@ -192,6 +200,8 @@ export default function App() {
 <details>
 <summary>번역 포춘쿠키</summary>
 <div markdown="6">
+
+<img src="https://github.com/user-attachments/assets/36050a6b-9de1-4cbe-b6fb-eab0000a4813"  width="200" height="400"/>
 
 ### 번역기
 
