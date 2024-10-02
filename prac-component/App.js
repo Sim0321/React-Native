@@ -8,6 +8,7 @@ import { Badge } from "./src/components/Badge";
 import { Button } from "./src/components/Button";
 import { Divider } from "./src/components/Divider";
 import { Spacer } from "./src/components/Spacer";
+import { TabIcon } from "./src/components/TabIcon";
 
 export default function App() {
   return (
@@ -75,6 +76,9 @@ export default function App() {
           <Icon name="home" size={50} color="green" />
         </Button>
       </View>
+
+      <TabIcon iconName="home"></TabIcon>
+      <TabIcon iconName="home" visibleBadge></TabIcon>
     </View>
   );
 }
