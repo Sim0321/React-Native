@@ -9,7 +9,7 @@ import { HeaderGroup } from "./HeaderGroup";
 const { width } = Dimensions.get("window");
 
 {
-  /* 컴파운드 컴포넌트 패턴 사용 */
+  /* 컴파운드 컴포넌트 패턴 사용. */
 }
 export class Header extends React.Component {
   render() {
