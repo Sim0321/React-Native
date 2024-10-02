@@ -5,6 +5,7 @@ import { LocalImage } from "./src/components/LocalImage";
 import { RemoteImage } from "./src/components/RemoteImage";
 import { Icon } from "./src/components/Icons";
 import { Badge } from "./src/components/Badge";
+import { Button } from "./src/components/Button";
 
 export default function App() {
   return (
@@ -45,6 +46,22 @@ export default function App() {
           <Icon name="home" size={50} color="black" />
         </Badge>
       </View>
+
+      <Button
+        onPress={() => {
+          console.log("눌림");
+        }}
+      >
+        <Typography>TEXT BUTTON</Typography>
+      </Button>
+
+      <Button
+        onPress={() => {
+          console.log("아이콘눌림");
+        }}
+      >
+        <Icon name="home" size={50} color="green" />
+      </Button>
     </View>
   );
 }
