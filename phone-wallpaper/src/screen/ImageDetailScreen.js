@@ -1,7 +1,7 @@
-import { useWindowDimensions, View } from "react-native";
+import { ActivityIndicator, useWindowDimensions, View } from "react-native";
 import { Typography } from "../components/Typography";
 import { Header } from "../components/Header/Header";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { RemoteImage } from "../components/RemoteImage";
 import { Icon } from "../components/Icons";
@@ -12,13 +12,15 @@ import * as MediaLibrary from "expo-media-library";
 export const ImageDetailScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  // console.log("route는?", route);
+
+  const [downloading, setDownloading] = useState(false);
 
   const onPressBack = useCallback(() => {
     navigation.goBack();
   }, []);
 
   const onPressDownload = useCallback(async () => {
+    setDownloading(true);
     const downloadResumable = FileSystem.createDownloadResumable(
       route.params.url,
       `${FileSystem.documentDirectory}${new Date().getMilliseconds()}.jpg`
@@ -26,21 +28,24 @@ export const ImageDetailScreen = () => {
 
     try {
       const { uri } = await downloadResumable.downloadAsync();
-      console.log("다운로드 완료!! ", uri);
+      // console.log("다운로드 완료!! ", uri);
 
       const permissionResult = await MediaLibrary.getPermissionsAsync(true);
-      console.log("permissionResult ::", permissionResult);
+      // console.log("permissionResult ::", permissionResult);
 
       if (permissionResult.status === "denied") {
         // 권한을 거부
+        setDownloading(false);
         return;
       }
 
       if (permissionResult.status === "undetermined") {
         // 아직 권한을 부여하거나 거부하지 않음
         const requestResult = await MediaLibrary.requestPermissionsAsync();
-        console.log("requestResult ::", requestResult);
+        // console.log("requestResult ::", requestResult);
+
         if (requestResult.status === "dinied") {
+          setDownloading(false);
           return;
         }
       }
@@ -48,8 +53,9 @@ export const ImageDetailScreen = () => {
       const asset = await MediaLibrary.createAssetAsync(uri);
       const album = MediaLibrary.createAlbumAsync("MyFirstAlbum", asset, false);
 
-      console.log(album);
+      // console.log(album);
     } catch (error) {}
+    setDownloading(false);
   }, []);
 
   const { width } = useWindowDimensions();
@@ -72,17 +78,30 @@ export const ImageDetailScreen = () => {
 
       <Button onPress={onPressDownload}>
         <View style={{ paddingBottom: 24, backgroundColor: "black" }}>
-          <View
-            style={{
-              height: 52,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography color="white">DOWNLOAD</Typography>
-            <Icon name="download" size={24} color="white" />
-          </View>
+          {downloading ? (
+            <View
+              style={{
+                height: 52,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ActivityIndicator />
+            </View>
+          ) : (
+            <View
+              style={{
+                height: 52,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography color="white">DOWNLOAD</Typography>
+              <Icon name="download" size={24} color="white" />
+            </View>
+          )}
         </View>
       </Button>
     </View>

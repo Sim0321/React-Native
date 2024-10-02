@@ -8,9 +8,9 @@ export const RemoteImage = (props) => {
       style={[
         props.style,
         {
-          width: props.width - 30,
+          width: props.width,
           height: props.height,
-          borderRadius: 15,
+          // borderRadius: 15,
         },
       ]}
     />
