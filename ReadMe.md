@@ -41,7 +41,7 @@
 ### React Life Cycle
 
 - constructor -> render -> componentDidMount -> componentWillUnmount
-![img]()
+  ![img]()
 
 ### 잘 만들어진 컴포넌트란?
 
@@ -52,8 +52,19 @@
 #### Atomic design pattern이란?
 
 - 작은 단위부터 큰 단위까지의 컴포넌트를 조합해 만들어가는 것
-<img src="https://github.com/user-attachments/assets/e6f4fc5e-6585-4a13-8bc1-7d2124926a99"  width="400" height="200"/>
+  <img src="https://github.com/user-attachments/assets/e6f4fc5e-6585-4a13-8bc1-7d2124926a99"  width="400" height="200"/>
 
+#### Dumb Component vs Smart Component
+
+- Dumb Component : **보여주는 일**에만 집중
+  - state를 따로 가지고 있지 않고 props를 통해 어떻게 보여질지만 보여지는 컴포넌트
+- Smart component : 상태를 가지고 **스스로 변함**
+  - 스스로 state를 가지고 계산하는 것 (드롭다운 등)
+
+#### 컴포넌트를 재사용 언제 만드는지에 대한 기준
+
+- 제일 작은 단위는 우선적으로 컴포넌트로 만들어 재사용
+- Molecules이상의 단계들 중에서 3회 이상 반복되면 컴포넌트로 만듦 등
 
 ## 프로젝트
 
@@ -93,7 +104,6 @@
 <summary>계산기</summary>
 <div markdown="2">
 <img src="https://github.com/user-attachments/assets/6df7f50b-0107-4f65-a441-9762694986d9"  width="200" height="400"/>
-
 
 ### UI
 
