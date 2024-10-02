@@ -42,6 +42,16 @@
 
 - constructor -> render -> componentDidMount -> componentWillUnmount
 
+### 잘 만들어진 컴포넌트란?
+
+- 컴포넌트를 만드는 이유는 바로 재사용성 때문임
+- 컴포넌트화 하지 않고 만들다 보면 너무 많은 코드 양으로 유지보수 난이도 증가
+- 너무 잦은 컴포넌트화는 예상하지 못한 변경점이 생겨 버그로 이어짐
+
+#### Atomic design pattern이란?
+
+- 작은 단위부터 큰 단위까지의 컴포넌트를 조합해 만들어가는 것
+
 ## 프로젝트
 
 <details>
@@ -204,13 +214,4 @@ export default function App() {
   - 보통 움직이는 애니메이션을 표현하려면 GIF 사용, 그러나 길이별로 해상도에 따라서 대응하기 때문에 파일이 무거워진다.
   - Lottie는 애니메이션을 코드로 변환해주기 때문에 Vector 이미지 처럼 사이즈 변경에 손실이 없는 것이 특징
   </div>
-    </details>
-
-<details>
-<summary>react-navigation</summary>
-<div markdown="7">
-
-### react navigation
-
-- </div>
     </details>
