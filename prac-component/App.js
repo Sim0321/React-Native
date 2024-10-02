@@ -13,8 +13,16 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { HeaderWithoutCompound } from "./src/components/HeaderWithoutCompound";
 import { Header } from "./src/components/Header/Header";
+import { HookTestComponent } from "./src/components/HookTestComponent";
+import { useCallback, useState } from "react";
 
 export default function App() {
+  const [a, setA] = useState(0);
+  const [b, setB] = useState(0);
+
+  const doSum = useCallback(() => {
+    return a + b;
+  }, [a, b]);
   return (
     // <View style={styles.container}>
     //   {/* 텍스트 */}
@@ -99,6 +107,21 @@ export default function App() {
 
           <Header.Icon iconName="close" onPress={() => console.log("닫기")} />
         </Header>
+
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <HookTestComponent a={a} b={b} />
+          <Typography>현재 callback으로 계산 된 값 : {doSum()}</Typography>
+          <Button
+            onPress={() => {
+              console.log("press");
+              setA(a + 1);
+            }}
+          >
+            <Typography>A더하기</Typography>
+          </Button>
+        </View>
       </View>
     </SafeAreaProvider>
   );

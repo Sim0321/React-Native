@@ -109,6 +109,15 @@
 7. useMount(컴포넌트가 mount된 시점에 callback 호출)
 8. usePrevious (state의 이전 값을 알아내고자 할 때 사용)
 
+#### Memoization
+
+- functional component는 render가 함수 호출이다
+- 함수 호출을 하며 생긴 함수 내부의 변수, 함수 등은 모두 호출 될 때마다 새로 할당하게 됨
+- 즉, Memoization이란 수행했던 연산 결과들을 어딘가 저장한 뒤 동일한 입력값인 경우 재활용 하는 것
+
+1. useMemo (기억할 값을 리턴해주는 함수, dependency array)
+2. useCallback (기억할 함수를 리턴해주는 함수, dependency array)
+
 ## 프로젝트
 
 <details>
