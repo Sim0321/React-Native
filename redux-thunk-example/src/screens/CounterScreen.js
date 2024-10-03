@@ -5,16 +5,22 @@ import { Button } from "../components/Button";
 import { Icon } from "../components/Icons";
 import { Spacer } from "../components/Spacer";
 import { Typography } from "../components/Typography";
+import { useDispatch, useSelector } from "react-redux";
+import { addCount, deleteCount } from "../actions/counter";
 
 export const CounterScreen = (props) => {
-  const [value, setValue] = useState(0);
+  // const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
+  const value = useSelector((state) => state.count.count);
 
   const onPressMinus = useCallback(() => {
-    setValue((value) => value - 1);
+    // setValue((value) => value - 1);
+    dispatch(deleteCount());
   }, []);
 
   const onPressPlus = useCallback(() => {
-    setValue((value) => value + 1);
+    // setValue((value) => value + 1);
+    dispatch(addCount());
   }, []);
 
   return (
