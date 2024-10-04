@@ -8,12 +8,34 @@ import { Icon } from "../components/Icons";
 import { Button } from "../components/Button";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
+import { useDispatch } from "react-redux";
+import { favoriteListReducer } from "../reducers/favoriteReducer";
+import { onClickFavorite } from "../actions/favorite";
+import { useSelector } from "react-redux";
 
 export const ImageDetailScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
   const [downloading, setDownloading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const temp = useSelector((state) => state);
+  console.log(temp);
+
+  const isFavorite = useSelector((state) => {
+    return (
+      state.favorite.favorite.filter((item) => item === route.params.url)
+        .length > 0
+    );
+  });
+
+  // console.log(isFavorite);
+
+  const onPressFavorite = useCallback(() => {
+    dispatch(onClickFavorite(route.params.url));
+  }, []);
 
   const onPressBack = useCallback(() => {
     navigation.goBack();
@@ -67,6 +89,11 @@ export const ImageDetailScreen = () => {
           <Header.Icon iconName="arrow-back" onPress={onPressBack} />
           <Header.Title title="IMAGE DETAIL" />
         </Header.Group>
+
+        <Header.Icon
+          iconName={isFavorite ? "heart" : "heart-outline"}
+          onPress={onPressFavorite}
+        />
       </Header>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <RemoteImage
