@@ -454,5 +454,7 @@ export default function App() {
 - media-library를 이용해 권한을 부여받은 후 나의 휴대폰 앨범에 저장
 - onPressIn과 onPressOut을 이용해 DetailImageList에 진입 시 애니메이션 추가
 
+- redux 전역 상태관리를 이용해 좋아요 토글기능 추가
+
   </div>
     </details>
