@@ -127,10 +127,95 @@
    - redux-thunk : 비동기 작업을 처리할 때 가장 많이 사용하는 middleware. 객체 대신 함수를 Dispatch 할 수 있게 해주는 것
 3. redux-saga : action의 발생여부를 모니터링 하다가 그 뒤 작업을 진행 하도록 함(제너레이터)
 
-- |       | redux thunk                                 | redux saga                                                                            |
-  | ----- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
-  | props | 낮은 Boilerplate, 이해하기 쉬운 코드        | 초기에 구현해야 할 Boilerplate가 많음 , 순수함수로 작성되기 때문에 테스트 적용이 쉬움 |
-  | cons  | 잘못 다뤄지면 수 없이 많은 콜백 지옥에 빠짐 | 높은 러닝커브(ES6 제너레이터)                                                         |
+|       | redux thunk                                 | redux saga                                                                            |
+| ----- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| props | 낮은 Boilerplate, 이해하기 쉬운 코드        | 초기에 구현해야 할 Boilerplate가 많음 , 순수함수로 작성되기 때문에 테스트 적용이 쉬움 |
+| cons  | 잘못 다뤄지면 수 없이 많은 콜백 지옥에 빠짐 | 높은 러닝커브(ES6 제너레이터)                                                         |
+
+- createSelector
+  - reselect package에 있는 함수, Memoization등 캐싱을 하기 위해 사용
+
+```js
+const valueSelector = createSelector(
+  (state) => state.value,
+  (value) => {
+    /* 어떠한 연산*/
+  }
+);
+const componentA = () =>{
+  const value = useSelector(valueSelector)
+  return(
+    // ... 또다른 View
+  )
+}
+```
+
+### Context API
+
+- React 16.3 버전부터 지원
+- props-drilling을 제거하기 위해 탄생
+- 간단한 전역변수(ex. theme, intl)를 선언할 때 사용
+
+#### context api 구성요소
+
+1. provider
+   - 값을 제공해주기 위해 root component로 사용
+
+```js
+const SomeContext = createContext();
+const componentA = () => {
+  return (
+    // ... 또 다른 View
+    <SomeContext.Provider value={`testValue`}>
+      {/* 값을 사용해야하는 컴포넌트들 */}
+    </SomeContext.Provider>
+  );
+};
+```
+
+2. Consumer
+   - 제공된 값에 접근할 수 있도록 하는 것
+
+```js
+const componentB = () => {
+  return (
+    // 또 다른 View
+    <SomeContext.Consumer>
+      {(context) => {
+        /* child에 있는 컴포넌트에서만 값 사용 가능 */
+      }}
+    </SomeContext.Consumer>
+  );
+};
+```
+
+### Redux VS Context API
+
+- Context API : 상태 관리 도구 X, 전역 변수 관리 O
+
+#### 상태관리 도구의 조건
+
+- 초기값을 저장하는가?
+- 스스로 값을 읽어올 수 있는가?
+- 스스로 값 업데이트가 가능한가?
+
+#### Context API 관점
+
+- 초기값을 저장하는가?(Provider에서 value등 설정 가능)
+- 스스로 값을 읽어올 수 있는가?(스스로 state를 가지고 있지 않아 값을 전달 해줘야함)
+- 스스로 값 업데이트가 가능한가?(스스로 state를 가지고 있지 않아 update함수를 함께 전달 해 줘야 함)
+
+#### Redux 관점
+
+- 초기값을 저장하는가?(reducer 생성시 초기값 지정 가능)
+- 스스로 값을 읽어올 수 있는가?(selector, mapStateToProps 등 함수를 통하여 읽어오기 가능)
+- 스스로 값 업데이트가 가능한가?(dispatch action을 통해서 가능)
+
+#### 그렇다면 Context API는 대체 언제 사용??
+
+- 주로 static한 잘 변경되지 않는 정보에 대해서 적용
+  - App theme 저장(light, dark)
+  - 다국적 앱에서 언어 팩 등
 
 ## 프로젝트
 
