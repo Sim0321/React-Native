@@ -3,41 +3,20 @@ import { Header } from "../components/Header/Header";
 import { Spacer } from "../components/Spacer";
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { LottoNumberView } from "../components/LottoNumberView";
-
-export const ITEM_SIZE = 40;
+import { getRandomSixNumber } from "../utils/Utils";
 
 export const HomeScreen = (props) => {
-  const onPressGetNumber = useCallback(() => {}, []);
+  const [numbers, setNumbers] = useState([]);
+  const onPressGetNumber = useCallback(() => {
+    const randomNumbers = getRandomSixNumber();
+    setNumbers(randomNumbers);
 
-  // const getNumberBackgroundColor = useCallback(() => {
-  //   const randomNumber = Math.floor(Math.random() * 10) % 6;
-  //   switch (randomNumber) {
-  //     case 0:
-  //       return "red";
-  //     case 1:
-  //       return "blue";
-  //     case 1:
-  //       return "blue";
-  //     case 2:
-  //       return "gray";
-  //     case 3:
-  //       return "green";
-  //     case 4:
-  //       return "purple";
-  //     case 1:
-  //       return "blue";
-  //     case 1:
-  //       return "blue";
-  //     case 1:
-  //       return "blue";
-  //     case 1:
-  //       return "blue";
-  //     default:
-  //       return "black";
-  //   }
-  // }, []);
+    // 5줄 나오는 코드
+    // const newNumbers = Array.from({ length: 5 }, () => getRandomSixNumber());
+    // setNumbers(newNumbers);
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -54,14 +33,18 @@ export const HomeScreen = (props) => {
       >
         <View
           style={{
-            height: 250,
+            height: 350,
             flexDirection: "column",
-            paddingHorizontal: 24,
+            paddingHorizontal: 12,
             backgroundColor: "white",
             borderColor: "gray",
           }}
         >
-          <LottoNumberView numbers={[1, 2, 3, 4, 5, 6]} />
+          {numbers.length === 7 && <LottoNumberView numbers={numbers} />}
+          {/* {numbers.length === 5 &&
+            numbers.map((line, index) => (
+              <LottoNumberView key={`line-${index}`} numbers={line} />
+            ))} */}
         </View>
         <Spacer space={20} />
 

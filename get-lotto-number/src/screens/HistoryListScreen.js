@@ -2,7 +2,6 @@ import { FlatList, View } from "react-native";
 import { Header } from "../components/Header/Header";
 import React, { useState, useCallback } from "react";
 import { Typography } from "../components/Typography";
-import { ITEM_SIZE } from "./HomeScreen";
 import { LottoNumberView } from "../components/LottoNumberView";
 
 export const HistoryListScreen = (props) => {
