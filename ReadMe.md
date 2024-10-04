@@ -217,6 +217,52 @@ const componentB = () => {
   - App theme 저장(light, dark)
   - 다국적 앱에서 언어 팩 등
 
+### Recoil
+
+- 2020년도 발표
+- Redux, Mobx등 기존 상태 관리 라이브러리의 아쉬운점들을 극복하고자 탄생
+
+#### Redux의 장단점
+
+- props : 많은 검증을 거친 라이브러리, redux-logger 등 디버그를 위한 편의가 잘 갖춰져 있음
+- cons : 높은 학습비용(러닝커브), boilerplate가 다소 있는 편
+
+#### Recoil 구성요소
+
+1. Atom
+   - 상태의 단위, 업데이트 또는 subscribe 등이 가능
+
+```js
+const fontSize = atom({
+  key: 'UNIQUE_KEY',
+  value : {/* 상태관리시 사용할 value */}
+})
+
+const componentA = () =>{
+  const [fontSize, setFontSize] = useRecoilState(fontState)
+  return (
+    // ... View
+  )
+}
+```
+
+2. selectors
+   - atoms나 selector의 파생데이터를 계산하는데 사용
+
+```js
+const fontSizeLabelState = selector({
+  key: "UNIQUE_KEY",
+  get: ({ get }) => {
+    const fontSize = get(fontSizeState);
+    return `fontSize is ${fontSize}`;
+  },
+});
+
+const componentA = () => {
+  const fontSizeLabel = useRecoilValue(fontSizeLabelState);
+};
+```
+
 ## 프로젝트
 
 <details>

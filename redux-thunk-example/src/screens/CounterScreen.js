@@ -8,27 +8,38 @@ import { Typography } from "../components/Typography";
 import { useDispatch, useSelector } from "react-redux";
 import { addCount, deleteCount } from "../actions/counter";
 import { CounterContext } from "../../App";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { counterStateAtom } from "../atom/counterAtom";
+import { counterMultiplier } from "../selectors/counterMultiplier";
 
 const CounterTitle = () => {
-  const [count] = useContext(CounterContext);
+  // const [count] = useContext(CounterContext);
+
+  const count = useRecoilValue(counterStateAtom);
   return <Typography fontSize={20}>{`${count}개`}</Typography>;
 };
 
+const CountMultiplier = () => {
+  const result = useRecoilValue(counterMultiplier);
+  return <Typography fontSize={20}>{`*5는 ${result}개`}</Typography>;
+};
+
 export const CounterScreen = (props) => {
-  const [_, setCount] = useContext(CounterContext);
+  // const [_, setCount] = useContext(CounterContext);
   // const [value, setValue] = useState(0);
+  const [count, setCount] = useRecoilState(counterStateAtom);
   // const dispatch = useDispatch();
   // const value = useSelector((state) => state.count.count);
 
   const onPressMinus = useCallback(() => {
-    // setValue((value) => value - 1);
     setCount((value) => value - 1);
+    // setCount((value) => value - 1);
     // dispatch(deleteCount());
   }, []);
 
   const onPressPlus = useCallback(() => {
-    // setValue((value) => value + 1);
     setCount((value) => value + 1);
+    // setCount((value) => value + 1);
     // dispatch(addCount());
   }, []);
 
@@ -69,6 +80,7 @@ export const CounterScreen = (props) => {
             <Icon name="add" size={20} color="black" />
           </Button>
         </View>
+        <CountMultiplier />
       </View>
     </View>
   );

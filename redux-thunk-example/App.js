@@ -5,6 +5,7 @@ import { CounterScreen } from "./src/screens/CounterScreen";
 import { Provider } from "react-redux";
 import store from "./src/store/store";
 import { createContext, useState } from "react";
+import { RecoilRoot } from "recoil";
 
 export const CounterContext = createContext();
 
@@ -17,9 +18,14 @@ export default function App() {
         <CounterScreen />
       </Provider> */}
 
-      <CounterContext.Provider value={counterState}>
+      {/* Context API */}
+      {/* <CounterContext.Provider value={counterState}>
         <CounterScreen />
-      </CounterContext.Provider>
+      </CounterContext.Provider> */}
+
+      <RecoilRoot>
+        <CounterScreen />
+      </RecoilRoot>
     </SafeAreaProvider>
   );
 }
