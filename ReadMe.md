@@ -458,3 +458,10 @@ export default function App() {
 
   </div>
     </details>
+
+<details>
+<summary>로또 번호 생성기</summary>
+<div markdown="8">
+
+  </div>
+    </details>
