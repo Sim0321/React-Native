@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Animated, View } from "react-native";
 import { Typography } from "./Typography";
 import { ITEM_SIZE } from "../constants";
 
 export const LottoNumberView = (props) => {
+  const [viewHeight, setViewHeight] = useState(0);
+  const [animatedHeightValues] = useState(new Animated.Value(1));
   // const animatedValues = useRef([]).current;
   // if (animatedValues.length !== props.numbers.length) {
   //   animatedValues.splice(
@@ -66,6 +68,20 @@ export const LottoNumberView = (props) => {
   //     }).start();
   //   });
   // }, [props.numbers]);
+
+  const translateY = animatedHeightValues.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-viewHeight * 0.6, 0],
+  });
+
+  useEffect(() => {
+    animatedHeightValues.setValue(0);
+
+    Animated.timing(animatedHeightValues, {
+      duration: 1000,
+      toValue: 1,
+    }).start();
+  }, [props.numbers]);
 
   return (
     // <View
@@ -140,46 +156,65 @@ export const LottoNumberView = (props) => {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
+        overflow: "hidden",
+      }}
+      onLayout={({ nativeEvent }) => {
+        // console.log(nativeEvent.layout);
+        setViewHeight(nativeEvent.layout.height);
       }}
     >
-      {props.numbers.slice(0, 6).map((item, index) => {
-        return (
-          <View
-            key={`1-${item}`}
-            style={{
-              backgroundColor: getNumberBackgroundColor(),
-              width: ITEM_SIZE,
-              height: ITEM_SIZE,
-              borderRadius: ITEM_SIZE / 2,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Typography fontSize={20} color="white">
-              {item}
-            </Typography>
-          </View>
-        );
-      })}
-
-      <Typography fontSize={20} color="gray">
-        +
-      </Typography>
-
-      <View
+      <Animated.View
         style={{
-          backgroundColor: "skyblue",
-          width: ITEM_SIZE,
-          height: ITEM_SIZE,
-          borderRadius: ITEM_SIZE / 2,
+          flex: 1,
+          flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
+          transform: [
+            {
+              translateY: translateY,
+            },
+          ],
         }}
       >
-        <Typography fontSize={20} color="white">
-          {props.numbers[6]}
+        {props.numbers.slice(0, 6).map((item, index) => {
+          return (
+            <View
+              key={`1-${item}`}
+              style={{
+                backgroundColor: getNumberBackgroundColor(),
+                width: ITEM_SIZE,
+                height: ITEM_SIZE,
+                borderRadius: ITEM_SIZE / 2,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography fontSize={20} color="white">
+                {item}
+              </Typography>
+            </View>
+          );
+        })}
+
+        <Typography fontSize={20} color="gray">
+          +
         </Typography>
-      </View>
+
+        <View
+          style={{
+            backgroundColor: "skyblue",
+            width: ITEM_SIZE,
+            height: ITEM_SIZE,
+            borderRadius: ITEM_SIZE / 2,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Typography fontSize={20} color="white">
+            {props.numbers[6]}
+          </Typography>
+        </View>
+      </Animated.View>
     </View>
   );
 };

@@ -6,6 +6,7 @@ const rootReducer = combineReducers({
   numbers: lottoNumberReducers,
 });
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer);
+// const store = createStore(rootReducer, applyMiddleware(logger));
 
 export default store;
