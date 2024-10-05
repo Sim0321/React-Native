@@ -6,13 +6,18 @@ import { Typography } from "../components/Typography";
 import React, { useCallback, useState } from "react";
 import { LottoNumberView } from "../components/LottoNumberView";
 import { getRandomSixNumber } from "../utils/Utils";
+import { useDispatch, useSelector } from "react-redux";
+import { createNuewNumbers } from "../actions/lottoNumbers";
 
 export const HomeScreen = (props) => {
-  const [numbers, setNumbers] = useState([]);
-  const onPressGetNumber = useCallback(() => {
-    const randomNumbers = getRandomSixNumber();
-    setNumbers(randomNumbers);
+  // const [numbers] = useState([]);
+  const dispatch = useDispatch();
+  const numbers = useSelector((state) => state.numbers.currentNumber);
 
+  const onPressGetNumber = useCallback(() => {
+    dispatch(createNuewNumbers());
+    // const randomNumbers = getRandomSixNumber();
+    // setNumbers(randomNumbers);
     // 5줄 나오는 코드
     // const newNumbers = Array.from({ length: 5 }, () => getRandomSixNumber());
     // setNumbers(newNumbers);
@@ -33,14 +38,14 @@ export const HomeScreen = (props) => {
       >
         <View
           style={{
-            height: 350,
+            height: 250,
             flexDirection: "column",
             paddingHorizontal: 12,
             backgroundColor: "white",
             borderColor: "gray",
           }}
         >
-          {numbers.length === 7 && <LottoNumberView numbers={numbers} />}
+          {numbers?.length === 7 && <LottoNumberView numbers={numbers} />}
           {/* {numbers.length === 5 &&
             numbers.map((line, index) => (
               <LottoNumberView key={`line-${index}`} numbers={line} />

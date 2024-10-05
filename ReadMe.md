@@ -461,7 +461,11 @@ export default function App() {
 
 <details>
 <summary>로또 번호 생성기</summary>
-<div markdown="8">
+  <div markdown="8">
+    
+### UI
+- 보너스 번호 추가 및 총 7개의 로또번호 index 값으로 animation 부여
+- 마지막 보너스 번호는 오름차순으로 정렬 안함
 
   </div>
-    </details>
+</details>
