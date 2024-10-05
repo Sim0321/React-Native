@@ -50,10 +50,7 @@ export const HistoryListScreen = (props) => {
                 backgroundColor: "white",
               }}
             >
-              <Typography fontSize={16}>
-                {item.date.getFullYear()}. {item.date.getMonth() + 1}.
-                {item.date.getDay()}
-              </Typography>
+              <Typography fontSize={16}>{item.date}</Typography>
 
               <LottoNumberView numbers={item.numbers} />
             </View>
