@@ -41,7 +41,6 @@
 ### React Life Cycle
 
 - constructor -> render -> componentDidMount -> componentWillUnmount
-  ![img]()
 
 ### 잘 만들어진 컴포넌트란?
 
@@ -262,6 +261,86 @@ const componentA = () => {
   const fontSizeLabel = useRecoilValue(fontSizeLabelState);
 };
 ```
+
+### 데이터 저장소
+
+#### AsyncStorage란?
+
+- Key값으로 String을 저장
+- 유저에 대한 정보(access Token, refresh Token)
+- 기능을 보여줄지 말지, 마지막 접속 시간 등 임시정보 저장 등
+- Cookie와 비슷한 사용 용도
+- Android : SQLite에 저장
+- ios : 네이티브 코드로 저장로직이 작성되어 있음
+- `AsyncStorage.setItem`
+  - key값과 value값을 넘겨 값을 저장하는 것. 저장하는 value는 string으로만 저장(웹의 localStorage와 사용법 동일)
+- AsyncStorage.getItem
+  - 값을 가져 오는 것, string 또는 null을 리턴
+- AsyncStorage.removeItem
+  - key값에 해당하는 value를 삭제
+- AsyncStorage.clear
+  - AsyncStorage의 모든 값 삭제
+- 주의 사항
+  1. Key값 중복으로 인한 value 덮어써짐 혹은 삭제된 사례
+     - Unique한 문자열을 만들어 사용(UUID 문자열 사용, 화면 또는 동작을 String으로 조합 ex: @/화면명/액션명)
+  2. AsyncStorage의 모든 함수는 Promise로 제공
+  3. Android에서 최대 저장 사이즈는 6MB, 한번에 가져올 수 있는 사이즈는 2MB
+
+### Fetch API
+
+- RemoteURL에 있는 리소스를 가져올 때 사용
+- React-Native에서 새로 정의한 것이 아닌 MDN에 이미 만들어진 것
+
+#### HTTP(Hyper Text Transfer Protocol)
+
+- Server에 데이터 저장, 업데이트 등을 요청하고 결과를 되돌려받는 것
+
+#### Request Method
+
+- GET
+- POST
+- PUT(특정 리소스를 업데이트)
+- PATCH(특정 리소스 중 특정 정보만 업데이트 )
+- DELETE
+
+#### Request 데이터 전달
+
+- Path parameter(URL PAth 내부에 값을 함께 넘기는 것)
+  - `/person/{:userID}`
+- Query parameter(URL 뒷부분에 ?를 붙이고 그 뒤에 key값과 value값을 넘겨주는 것)
+  - `person?birthday={:date}&sort={:regeditDate}`
+- Request Body(URL에 데이터가 보이지 않고, Body에 작성해서 넘기게 됨)
+  - 데이터가 긴 경우 Request Body 사용이 적합(URL 길이제한)
+
+#### Response status code
+
+- 400 : Client에서 값을 잘못 전달함(즉, Bad Request)
+- 403 : 유저정보는 식별되나, 해당 URL로의 접근이 거부됨
+- 404 : URL이 존재 하지 않음
+
+#### 사용법
+
+```js
+fetch(REQUEST_URL, { method: "POST", body: {} }).then((result) =>
+  result.json()
+);
+```
+
+### Redux-persist
+
+- 저장소에 마지막 Redux 상태를 저장하였다 이어서 사용할 수 있도록 하는 것
+- React-Native에서는 AsyncStorage에 저장
+
+#### PersistGate
+
+- Component형태로 작성되어 있음
+- Storage로부터 데이터를 로드해 Redux를 업데이트
+- 로딩하는 동안에 Loading 컴포넌트 추가 기능
+
+#### BlackList, WhiteList
+
+- BlackList : 유지하지 않아도 되는 Redux key값들
+- WhiteList : 유지를 해야하는 Key값들
 
 ## 프로젝트
 
