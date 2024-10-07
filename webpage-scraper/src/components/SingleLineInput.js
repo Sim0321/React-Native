@@ -34,7 +34,6 @@ export const SingleLineInput = (props) => {
           value={props.value}
           onChangeText={props.onChangeText}
           placeholder={props.placeholder}
-          blurOnSubmit={false}
           style={[props.style, { fontSize: props.fontSize ?? 20 }]}
           onFocus={() => {
             setFocused(true);

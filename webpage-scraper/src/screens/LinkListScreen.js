@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import { Header } from "../components/Header/Header";
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
@@ -7,18 +7,22 @@ import { useNavigation } from "@react-navigation/native";
 import { Spacer } from "../components/Spacer";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "../components/Icons";
+import { useRecoilValue } from "recoil";
+import { atomLinkList } from "../atoms/atomLinkList";
 
 export const LinkListScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
 
-  const onPressButton = useCallback(() => {
-    navigation.navigate("LinkDetail");
+  const onPressListItem = useCallback((item) => {
+    navigation.navigate("LinkDetail", { item });
   }, []);
 
   const onPressAddButton = useCallback(() => {
     navigation.navigate("AddLink");
   }, []);
+
+  const data = useRecoilValue(atomLinkList);
 
   return (
     <View style={{ flex: 1 }}>
@@ -27,7 +31,7 @@ export const LinkListScreen = () => {
           <Header.Title title="LINK LIST" />
         </Header.Group>
       </Header>
-      <View style={{ flex: 1 }}>
+      {/* <View style={{ flex: 1 }}>
         <Button onPress={onPressButton}>
           <Typography>Link DETAIL로 이동</Typography>
         </Button>
@@ -37,7 +41,34 @@ export const LinkListScreen = () => {
         <Button onPress={onPressAddButton}>
           <Typography>ADD Link로 이동</Typography>
         </Button>
-      </View>
+      </View> */}
+
+      <FlatList
+        style={{ flex: 1 }}
+        data={data.list}
+        renderItem={({ item }) => {
+          return (
+            <Button
+              onPress={() => {
+                onPressListItem(item);
+              }}
+              paddingHorizontal={24}
+              paddingVertical={24}
+            >
+              <View>
+                <Typography fontSize={20}>{item.link}</Typography>
+
+                <Spacer space={4} />
+
+                <Typography fontSize={16} color="gray">
+                  {item.title !== "" ? `${item.title.slice(0, 20)} | ` : ""}
+                  {new Date(item.createdAt).toLocaleString("ko-KR")}
+                </Typography>
+              </View>
+            </Button>
+          );
+        }}
+      />
 
       <View
         style={{

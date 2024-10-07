@@ -1,10 +1,13 @@
 import { Header } from "../components/Header/Header";
 import { View } from "react-native";
 import { Spacer } from "../components/Spacer";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useCallback } from "react";
+import WebView from "react-native-webview";
 
 export const LinkDetailScreen = () => {
+  const route = useRoute();
+  // console.log(route.params.item);
   const navigation = useNavigation();
 
   const onPressBack = useCallback(() => {
@@ -19,6 +22,8 @@ export const LinkDetailScreen = () => {
           <Header.Title title="LINK DETAIL" />
         </Header.Group>
       </Header>
+
+      <WebView style={{ flex: 1 }} source={{ uri: route.params.item.link }} />
     </View>
   );
 };

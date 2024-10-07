@@ -548,3 +548,39 @@ export default function App() {
 
   </div>
 </details>
+
+<details>
+<summary>핸드폰 배경화면 다운 앱</summary>
+<div markdown="7">
+
+<!-- <img src="https://github.com/user-attachments/assets/36050a6b-9de1-4cbe-b6fb-eab0000a4813"  width="200" height="400"/> -->
+
+### UI
+
+- react-navigation/native를 이용해 최상단은 StackNavigator로, bottomTab은 BottomTabNavigator로 구현
+
+### 파일 다운로드
+
+- expo의 file system을 이용해 다운로드
+- `FileSystem.createDownloadResumable`과 `downloadAsync`를 이용해 `file:///var/mobile/Containers/Data/Application/26B31479-C1B1-4D09-91ED-4D418B2A1D4C/Documents/ExponentExperienceData/@anonymous/phone-wallpaper-03204172-9059-4918-9ac3-ec83a08ec379/49.jpg` 이 곳에 저장을 시킴
+
+- media-library를 이용해 권한을 부여받은 후 나의 휴대폰 앨범에 저장
+- onPressIn과 onPressOut을 이용해 DetailImageList에 진입 시 애니메이션 추가
+
+- redux 전역 상태관리를 이용해 좋아요 토글기능 추가
+
+  </div>
+    </details>
+
+<details>
+<summary>웹 페이지 스크랩</summary>
+  <div markdown="9">
+
+### UI
+
+- react-native-webview를 이용해 웹뷰 보여줌
+
+- recoil의 atom Effect를 이용해 persist 기능 구현(AsyncStorage에서 값을 get/set/remove)
+
+  </div>
+</details>
