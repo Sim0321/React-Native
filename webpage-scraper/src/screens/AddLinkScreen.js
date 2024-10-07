@@ -9,12 +9,15 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Spacer } from "../components/Spacer";
 import { useSetRecoilState } from "recoil";
 import { atomLinkList } from "../atoms/atomLinkList";
+import { getOpenGraphData } from "../utils/OpenGraphTagUtils";
 
 export const AddLinkScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
   const updateList = useSetRecoilState(atomLinkList);
   const [url, setUrl] = useState("");
+
+  const [metaData, setMetaData] = useState(null);
 
   const onPressClose = useCallback(() => {
     navigation.goBack();
@@ -45,6 +48,12 @@ export const AddLinkScreen = () => {
     setUrl("");
   }, [url]);
 
+  const onSubmitEditing = useCallback(async () => {
+    const result = await getOpenGraphData(url);
+    console.log(result);
+    setMetaData(result);
+  }, [url]);
+
   return (
     <View style={{ flex: 1 }}>
       <Header>
@@ -64,6 +73,7 @@ export const AddLinkScreen = () => {
           value={url}
           onChangeText={setUrl}
           placeholder="https://example.com"
+          onSubmitEditing={onSubmitEditing}
         />
       </View>
 
