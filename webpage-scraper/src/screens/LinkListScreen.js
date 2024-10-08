@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Icon } from "../components/Icons";
 import { useRecoilValue } from "recoil";
 import { atomLinkList } from "../atoms/atomLinkList";
+import { removeItem } from "../utils/AsyncStorageUtils";
 
 export const LinkListScreen = () => {
   const navigation = useNavigation();
@@ -20,7 +21,13 @@ export const LinkListScreen = () => {
 
   const onPressAddButton = useCallback(() => {
     navigation.navigate("AddLink");
+    // console.log("눌림");
+    // removeItem("MAIN/LINK_LIST");
   }, []);
+
+  const onPressClearAll = () => {
+    removeItem("MAIN/LINK_LIST");
+  };
 
   const data = useRecoilValue(atomLinkList);
 
@@ -38,10 +45,16 @@ export const LinkListScreen = () => {
 
         <Spacer space={12} />
 
-        <Button onPress={onPressAddButton}>
-          <Typography>ADD Link로 이동</Typography>
-        </Button>
+        
       </View> */}
+
+      {/* <Button onPress={onPressAddButton}>
+        <Typography>ADD Link로 이동</Typography>
+      </Button> */}
+
+      <Button onPress={onPressClearAll} style={{ backgroundColor: "pink" }}>
+        <Typography>초기화 버튼</Typography>
+      </Button>
 
       <FlatList
         style={{ flex: 1 }}

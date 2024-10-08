@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Header } from "../components/Header/Header";
 import { useWindowDimensions, View } from "react-native";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { SingleLineInput } from "../components/SingleLineInput";
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
@@ -11,6 +11,7 @@ import { useSetRecoilState } from "recoil";
 import { atomLinkList } from "../atoms/atomLinkList";
 import { getOpenGraphData } from "../utils/OpenGraphTagUtils";
 import { RemoteImage } from "./../components/RemoteImage";
+import { getClipboardString } from "../utils/ClipboardUtils";
 
 export const AddLinkScreen = () => {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ export const AddLinkScreen = () => {
 
   const [metaData, setMetaData] = useState(null);
 
-  console.log(metaData);
+  // console.log(metaData);
 
   const { width } = useWindowDimensions();
 
@@ -38,8 +39,8 @@ export const AddLinkScreen = () => {
     updateList((prevState) => {
       const list = [
         {
-          title: "",
-          image: "",
+          title: metaData.title,
+          image: metaData.image,
           link: url,
           createdAt: new Date().toISOString(),
         },
@@ -58,6 +59,28 @@ export const AddLinkScreen = () => {
     // console.log("submit ::", url, result);
     setMetaData(result);
   }, [url]);
+
+  const onGetClipboardString = useCallback(async () => {
+    const result = await getClipboardString();
+    console.log("clipbord Result ::", result);
+    if (result.startsWith("http://") || result.startsWith("https://")) {
+      console.log("여기 들어와져요");
+      setUrl(result);
+      const ogResult = await getOpenGraphData(result);
+      console.log("ogResult ::", ogResult);
+      setMetaData({
+        title: ogResult.title,
+        image: ogResult.image,
+        description: ogResult.description,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    // https://fastcampus.co.kr
+    // console.log("여기 되니?");
+    onGetClipboardString();
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>

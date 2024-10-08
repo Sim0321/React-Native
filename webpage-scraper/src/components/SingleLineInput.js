@@ -29,6 +29,7 @@ export const SingleLineInput = (props) => {
       >
         <TextInput
           autoCorrect={false}
+          autoCapitalize="none"
           value={props.value}
           onChangeText={props.onChangeText}
           placeholder={props.placeholder}
