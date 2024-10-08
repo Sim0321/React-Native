@@ -326,6 +326,11 @@ fetch(REQUEST_URL, { method: "POST", body: {} }).then((result) =>
 );
 ```
 
+### persist란?
+
+- 글로벌 상태관리 라이브러리에서 상태를 저장소에 저장하는 것. 즉, 상태를 유지하고 저장소에 저장하는 과정을 뜻함.
+- 페이지를 새로고침 또는 앱을 재시작해도 상태를 유지시켜줄 수 있게 해줌
+
 ### Redux-persist
 
 - 저장소에 마지막 Redux 상태를 저장하였다 이어서 사용할 수 있도록 하는 것
@@ -341,6 +346,12 @@ fetch(REQUEST_URL, { method: "POST", body: {} }).then((result) =>
 
 - BlackList : 유지하지 않아도 되는 Redux key값들
 - WhiteList : 유지를 해야하는 Key값들
+
+### Open Graph Tag란?
+
+- Meta에서 개발한 HTML 프로토콜
+- Title, Type, Image URL등 페이지에 대한 정보를 조회 할 수 있음
+- Html Head 태그 안에 들어있는 정보(ex:카카오톡에서 이미지 보낼때)
 
 ## 프로젝트
 
@@ -581,6 +592,7 @@ export default function App() {
 - react-native-webview를 이용해 웹뷰 보여줌
 
 - recoil의 atom Effect를 이용해 persist 기능 구현(AsyncStorage에서 값을 get/set/remove)
+- react-native-opengraph-kit을 이용해 open graph tag 사용
 
   </div>
 </details>
