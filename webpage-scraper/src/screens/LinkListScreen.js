@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useCallback, useMemo } from "react";
+import { View, Text, FlatList, SectionList } from "react-native";
 import { Header } from "../components/Header/Header";
 import { Button } from "../components/Button";
 import { Typography } from "../components/Typography";
@@ -14,6 +14,7 @@ import { removeItem } from "../utils/AsyncStorageUtils";
 export const LinkListScreen = () => {
   const navigation = useNavigation();
   const safeAreaInset = useSafeAreaInsets();
+  const data = useRecoilValue(atomLinkList);
 
   const onPressListItem = useCallback((item) => {
     navigation.navigate("LinkDetail", { item });
@@ -29,7 +30,32 @@ export const LinkListScreen = () => {
     removeItem("MAIN/LINK_LIST");
   };
 
-  const data = useRecoilValue(atomLinkList);
+  const sectionData = useMemo(() => {
+    const dateList = {};
+    const makeDateString = (createdAt) => {
+      const dateItem = new Date(createdAt);
+      return `${dateItem.getFullYear()}.${
+        dateItem.getMonth() + 1
+      }.${dateItem.getDay()} ${dateItem.getHours()}: ${dateItem.getMinutes()}`;
+    };
+
+    if (!data.list) return [];
+
+    data.list.forEach((item) => {
+      const keyName = makeDateString(item.createdAt);
+      if (!dateList[keyName]) {
+        dateList[keyName] = [item];
+      } else {
+        dateList[keyName].push(item);
+      }
+    });
+    return Object.keys(dateList).map((item) => {
+      return {
+        title: item,
+        data: dateList[item],
+      };
+    });
+  }, [data.list]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -56,7 +82,49 @@ export const LinkListScreen = () => {
         <Typography>초기화 버튼</Typography>
       </Button>
 
-      <FlatList
+      <SectionList
+        style={{ flex: 1 }}
+        sections={sectionData}
+        renderSectionHeader={({ section }) => {
+          return (
+            <View
+              style={{
+                paddingHorizontal: 12,
+                paddingVertical: 4,
+                backgroundColor: "white",
+              }}
+            >
+              <Typography color="gray" fontSize={12}>
+                {section.title}
+              </Typography>
+            </View>
+          );
+        }}
+        renderItem={({ item }) => {
+          return (
+            <Button
+              onPress={() => {
+                onPressListItem(item);
+              }}
+              // paddingHorizontal={24}
+              // paddingVertical={24}
+            >
+              <View style={{ paddingHorizontal: 24, paddingVertical: 24 }}>
+                <Typography fontSize={20}>{item.link}</Typography>
+
+                <Spacer space={4} />
+
+                <Typography fontSize={16} color="gray">
+                  {item.title !== "" ? `${item.title.slice(0, 20)} | ` : ""}
+                  {new Date(item.createdAt).toLocaleString("ko-KR")}
+                </Typography>
+              </View>
+            </Button>
+          );
+        }}
+      />
+
+      {/* <FlatList
         style={{ flex: 1 }}
         data={data.list}
         renderItem={({ item }) => {
@@ -81,7 +149,7 @@ export const LinkListScreen = () => {
             </Button>
           );
         }}
-      />
+      /> */}
 
       <View
         style={{
