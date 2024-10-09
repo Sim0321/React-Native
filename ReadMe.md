@@ -596,3 +596,12 @@ export default function App() {
 
   </div>
 </details>
+
+<details>
+<summary>뉴스 스크랩 앱</summary>
+  <div markdown="10">
+
+### UI
+
+  </div>
+</details>

@@ -13,7 +13,6 @@ export const SingleLineInput = (props) => {
   return (
     <Pressable
       style={{
-        // flex: 1,
         width: "100%",
       }}
       onPress={Keyboard.dismiss}
