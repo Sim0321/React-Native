@@ -556,6 +556,7 @@ export default function App() {
 ### UI
 - 보너스 번호 추가 및 총 7개의 로또번호 index 값으로 animation 부여
 - 마지막 보너스 번호는 오름차순으로 정렬 안함
+- redux-persist를 이용해 새로고침시 AsyncStorage에 저장
 
   </div>
 </details>
