@@ -1,7 +1,8 @@
 # RN 시작기
 
 - `npx create-expo-app 프로젝트 이름--template blank` JS로 시작
-- `npx create-expo-app 프로젝트 이름` TS로 시작
+- `npx create-expo-app 프로젝트 이름`
+- `npx create-expo-app -t expo-template-blank-typescript` TS로 시작
 
 ## 학습
 
@@ -352,6 +353,137 @@ fetch(REQUEST_URL, { method: "POST", body: {} }).then((result) =>
 - Meta에서 개발한 HTML 프로토콜
 - Title, Type, Image URL등 페이지에 대한 정보를 조회 할 수 있음
 - Html Head 태그 안에 들어있는 정보(ex:카카오톡에서 이미지 보낼때)
+
+### Firebase
+
+- 구글에서 만들어진 BAAS(Backend As A Service)
+- 모바일에서 필요한 거의 모든 기능을 제공
+- 저장장치, 테스팅 푸시 등 필요한 거의 모든 기능을 제공
+
+#### RealTime DataBase
+
+- 실시간으로 접근할 수 있는 database
+- NoSQL의 형태로 구성
+- 실질적으로 저장되는 값은 key와 value값으로 구성된 JSON Object
+- 제한사항
+  - 동시 연결수에 대한 제한 있음 (무료 plan 100, 유료 plan 20만)
+  - 한번에 Write은 1MB 내외
+
+#### Storage
+
+- 파일 저장을 위해서 사용
+- 프로필 사진, 임시 저장하는 파일 저장 가능
+
+#### Cloud Firestore
+
+- 데이터를 저장하기 위한 것
+- 실시간성, NoSQL을 지원한다는 점은 Realtime database와 비슷
+- 저장하는 값 : JSON 형태가 아닌 Collections를 저장
+  - Document : Data가 집합해있는 단위
+  - Collections : Document가 집합해있는 단위
+
+#### RealTime Database VS Cloud Firestore
+
+| RealTime Database            | CloudFirestore               |
+| ---------------------------- | ---------------------------- |
+| JSON Object 저장             | Document단위로 저장          |
+| 정렬 및 필터링 + 조건문 불가 | 정렬 및 필터링 + 조건문 가능 |
+| 용량 또는 데이터 크기에 과금 | docuemnt CRUD에 따라 과금    |
+
+- 즉, 큰 단위 데이터 요청시에는 Cloud Firestore 유리
+- 데이터가 작고 CRUD가 자주 발생하면 Realtime database 유리
+
+#### Crashlytics
+
+- 앱이 강제종료 되었음을 알려주는 Tool
+- 로직을 잘 작성하더라도 라이브러리 등에서 크래시가 날 수도 있음
+
+#### Remote Config
+
+- 원격에 있는 상수값을 업데이트 해줄 수 있는 Tool
+- 특정 기능에 대한 ON/OFF 또는 특정화면의 텍스트를 바꾸는 것으로 활용
+- 주의점
+  - Remote Config값을 조회 실패했을 때 대비해 기본값을 설정
+  - 실패 등 여러가지 이유로 인하여 최신값을 항상 보여주지는 않음
+
+#### AB Test
+
+- A그룹과 B그룹을 두고 어떤 그룹이 더 많은 전환율을 보이는지 체크
+- 기존 버전과 신규로 변경된 버전에서의 분기
+- 개선된 버전에서의 유저 피드백을 받는다는 이점
+- 사전 작업
+  - Remote Config : config 설정된 값들에 대하여 가능
+  - Analytics : 분석을 위해 필요
+
+### 테스트란?
+
+- 에러를 사전에 검사하기 위한 것
+- 동작이 이전과 다른 것이 있는지 검사하는 것
+- 사전 검증을 통하여 안정성 있는 앱을 전달하기 위함
+- 종류
+  1. Static Analysis(정적 분석)
+     - 코드 상에서 있는 문제를 바로 알아 낼 수 있는 것
+     - Type Checking(Typescript, Flow 등)
+     - Lint(ESLint)
+     - 가장 쉽게 접근할 수 있는 방법
+     - 저 비용 고 효율
+  2. Testable code
+     - 코드를 각각 단위에 맞게 쪼개는 것
+     - 잘게 쪼갤수록 더 테스트가 용이
+     - 비즈니스 로직, App State, 컴포넌트등의 단위로 분리
+  3. Structuring Test
+     - 테스트 작성시 명확하게 어떤 테스트인지를 전달하기 위함
+     - 구조화된 테스트문은 모두가 테스트의 요구사항을 파악하기 쉬워짐
+     - Given : 어떤 조건의 테스트인지?
+     - When : 어떤 함수 또는 행동에 의해서 발생하는 것인지?
+     - Then : 어떠한 결과값이 나와야하는지?
+     - ex ) 과거게 좋아요 누른 기록 없이 좋아요를 누르면 좋아요가 올라간다.
+  4. Unit Test
+     - 가장 작은 단위에 대한 테스트
+     - 쉽고 빠르게 작성할 수 있고 바로 실행하여 검증 가능
+     - function 또는 class 등에 적용
+     - 작은 단위로만 테스트하기 때문에, 합쳐졌을 때 동작이 달라질 수도 있음
+  5. Integration Test
+     - 통합 테스트, 유닛테스트들과 함께 통합해서 테스트 하는 것
+     - 각각의 유닛 테스트 결과들을 섞어 테스트 결과값을 정하게 됨
+  6. Component Test
+     - 컴포넌트 자체에 대한 검증을 진행
+     - Interaction Test : 버튼이 눌리는, 혹은 disable되었을 때 눌리지 않는지 등에 대한 검증
+     - Snapshot Test : 이전에 render 되던 것과 지금 render되는 것이 같은지 검증
+  7. E2E Test(End to End Test)
+     - 실제로 돌아가는 앱에서 지정된 스크립트대로 반복 하는 것
+     - 실제로 로그인 플로우 등 잘 변하지 않는 화면에 대해서는 테스트 가능
+     - 실제 핸드폰과 연동하여 테스트 가능
+     - Detox, Appium등 오픈소스로 되어있음
+
+### Jest
+
+- Javascript Unit Test Framework
+- 자바스크립트에서 유닛테스트를 만들때 가장 범용적으로 사용 됨
+- Meat에서 개발
+- 기본 구조
+
+```js
+test("1+1=2", () => {
+  expect(1 + 1).toBe(2);
+});
+```
+
+- `npm install jest @types/jest`
+- ... 추후 추가
+
+### expo의 한계점
+
+1. Expo SDK 미지원시 불편함
+   - 지원하지 않는 SDK를 사용하면 eject해서 사용 해야 함
+   - 소셜로그인과 같은 네이티브 모듈을 사용할 때 발생
+2. EAS Build System의 빌드 시간
+   - 빌드를 걸어두게 되면 EAS에서 빌드가 진행됨
+   - 클라우드 리소스를 사용하다보니 아무래도 대기 시간이 필요
+   - 빌드서버 구축, 유료 플랜을 사용하지 않는다면 발생(약 15~20분 사이)
+3. 빌드 결과물의 size
+   - 빌드 결과물의 용량이 큰편(20MB 이상)
+   - Expo SDK에 해당하는 것들이 모두 들어가기 때문
 
 ## 프로젝트
 
