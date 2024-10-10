@@ -592,7 +592,7 @@ export default function App() {
 - react-native-webview를 이용해 웹뷰 보여줌
 
 - recoil의 atom Effect를 이용해 persist 기능 구현(AsyncStorage에서 값을 get/set/remove)
-- react-native-opengraph-kit을 이용해 open graph tag 사용
-
+- react-native-opengraph-kit을 이용해 open graph tag(Meta data 보여주기)
+- 클립보드를 이용해 복사된게 있을 시 더 빨리 metaData 보여주는 기능
   </div>
 </details>
