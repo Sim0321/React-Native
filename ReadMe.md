@@ -596,3 +596,12 @@ export default function App() {
 - 클립보드를 이용해 복사된게 있을 시 더 빨리 metaData 보여주는 기능
   </div>
 </details>
+
+<details>
+<summary>뉴스 스크랩 앱</summary>
+  <div markdown="10">
+
+### UI
+
+  </div>
+</details>
